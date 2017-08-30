@@ -3,8 +3,8 @@ error_reporting(-1);
 date_default_timezone_set('UTC');
 
 function getlastlog() {
-    $line_of_text = file_get_contents("svxlinkreflector.log");
-    $logline = explode("\n", $line_of_text);
+    //$logline = file_get_contents("svxlinkreflector.log");
+    $logline = shell_exec("cat svxlinkreflector.log | head -n 50");
     return $logline;
 }
 
