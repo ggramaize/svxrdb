@@ -1,6 +1,6 @@
 # svxrdb
 
-Das ist ein sehr einfaches Dashbaord für den Service svxreflektor(Server Seite).
+Das ist ein sehr einfaches Dashboard für den Service svxreflektor(Server Seite).
 
 Den Ordner in das root Verzeichniss vom Webservice z.B. /var/www/html oder /var/www/html/httpdocs verschieben.
 
