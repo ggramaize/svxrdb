@@ -4,7 +4,7 @@ date_default_timezone_set('UTC');
 
 function getlastlog() {
     //$logline = file_get_contents("svxlinkreflector.log");
-    $logline = shell_exec("cat svxlinkreflector.log | head -n 50");
+    $logline = shell_exec("tac svxlinkreflector.log | head -n 50");
     return $logline;
 }
 
