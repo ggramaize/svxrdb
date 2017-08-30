@@ -8,4 +8,8 @@ In der Datei logparse.php unter
 file_get_contents("svxlinkreflector.log");
 die Logdatei angeben.
 
+Der Zeitstempel in der svxreflector.conf sollte so eingestellt sein.
+[GLOBAL]
+TIMESTAMP_FORMAT="%c"
+
 Dies ist eine Beta und wird noch erweitert, bitte auf Dateirechte der Logdatei achten.
