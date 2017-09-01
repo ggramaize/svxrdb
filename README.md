@@ -10,6 +10,6 @@ die Logdatei angeben.
 
 Der Zeitstempel in der svxreflector.conf sollte so eingestellt sein.
 [GLOBAL]
-TIMESTAMP_FORMAT="%c"
+TIMESTAMP_FORMAT="%d.%m.%Y %H:%M:%S"
 
 Dies ist eine Beta und wird noch erweitert, bitte auf Dateirechte der Logdatei achten.

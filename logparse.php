@@ -1,5 +1,5 @@
 <?php
-error_reporting(-1);
+error_reporting(0);
 date_default_timezone_set('UTC');
 
 function getlastlog() {
@@ -22,20 +22,32 @@ foreach ($logline as $value) {
     $value = str_replace(" CEST:", "",$value);
     if(preg_match("/Login OK from/i", $value)) {
         $data = explode(" ",$value); //im 5 Call
-        $data[5] = str_replace(":","",$data[5]);
-        if (($key = array_search($data[5], array_column($clients, 'CALL'))) !==FALSE) {
+    /*
+Array
+(
+    [0] => 01.09.2017
+    [1] => 18:02:47:
+    [2] => DO0SE:
+    [3] => Login
+    [4] => OK
+    [5] => from
+    [6] => 79.240.57.65:50468
+)
+    */
+        $data[2] = str_replace(":","",$data[2]);
+        if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
             //member found
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['IP']=substr($data[9], 0, 10);
+            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['IP']=substr($data[6], 0, 10);
             $clients[$key]['STATUS']="ONLINE";
             $clients[$key]['TX_S']="online";
             $clients[$key]['TX_E']="online";
         }
         else {
             //member not found add im
-            $clients[] = array('CALL' => $data[5], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['IP']=substr($data[9], 0, 10);
+            $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
+            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['IP']=substr($data[6], 0, 10);
             $clients[$key]['STATUS']="ONLINE";
             $clients[$key]['TX_S']="online";
             $clients[$key]['TX_E']="online";
@@ -43,20 +55,36 @@ foreach ($logline as $value) {
     } // END Login OK from
 
     if(preg_match("/disconnected: Connection closed/i", $value)) {
-        $data = explode(" ",$value); //@6 Call @8 IP
-        $data[5] = str_replace(":","",$data[5]);
-        if (($key = array_search($data[5], array_column($clients, 'CALL'))) !==FALSE) {
+        $data = explode(" ",$value);
+        $data[2] = str_replace(":","",$data[2]);
+        /*
+Array
+(
+    [0] => 01.09.2017
+    [1] => 18:18:31:
+    [2] => DB0MGN-2m:
+    [3] => Client
+    [4] => 87.166.35.47:33692
+    [5] => disconnected
+    [6] => Connection
+    [7] => closed
+    [8] => by
+    [9] => remote
+    [10] => peer
+)
+        */
+        if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
             //member found
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['IP']=substr($data[7], 0, 10);
+            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['IP']=substr($data[4], 0, 10);
             $clients[$key]['STATUS']="OFFLINE";
             $clients[$key]['TX_S']="offline";
             $clients[$key]['TX_E']="offline";
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[5], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['IP']=substr($data[7], 0, 10);
+            $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
+            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['IP']=substr($data[4], 0, 10);
             $clients[$key]['STATUS']="OFFLINE";
             $clients[$key]['TX_S']="offline";
             $clients[$key]['TX_E']="offline";
@@ -65,35 +93,58 @@ foreach ($logline as $value) {
 
     if(preg_match("/Talker start/i", $value)) {
         $data = explode(" ",$value); //@7 Call
-        $data[6] = str_replace(":","",$data[6]);
-        if (($key = array_search($data[6], array_column($clients, 'CALL'))) !==FALSE) {
+        $data[3] = str_replace(":","",$data[3]);
+        /*
+        Array
+(
+    [0] => 01.09.2017
+    [1] => 18:13:13:
+    [2] => ###
+    [3] => DO0SE:
+    [4] => Talker
+    [5] => start
+    [6] => 
+)
+        */
+        if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
             $clients[$key]['STATUS']="TX";
-            $clients[$key]['TX_S']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['TX_E']="$data[0] $data[1] $data[2] $data[3] $data[4]";
+            $clients[$key]['TX_S']="$data[0] $data[1]";
+            $clients[$key]['TX_E']="$data[0] $data[1]";
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[6], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
+            $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
             $clients[$key]['STATUS']="TX";
-            $clients[$key]['TX_S']="$data[0] $data[1] $data[2] $data[3] $data[4]";
-            $clients[$key]['TX_E']="$data[0] $data[1] $data[2] $data[3] $data[4]";
+            $clients[$key]['TX_S']="$data[0] $data[1]";
+            $clients[$key]['TX_E']="$data[0] $data[1]";
         }
     }// END Talker start
     
     if(preg_match("/Talker stop/i", $value)) {
         $data = explode(" ",$value); //@7 Call
-        $data[6] = str_replace(":","",$data[6]);
-        if (($key = array_search($data[6], array_column($clients, 'CALL'))) !==FALSE) {
+        $data[3] = str_replace(":","",$data[3]);
+        /*
+        Array
+(
+    [0] => 01.09.2017
+    [1] => 18:13:17:
+    [2] => ###
+    [3] => DO0SE:
+    [4] => Talker
+    [5] => stop
+    [6] => 
+)
+        */
+        if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
             $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_E']="$data[0] $data[1] $data[2] $data[3] $data[4]";
+            $clients[$key]['TX_E']="$data[0] $data[1]";
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[6], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
+            $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
             $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_E']="$data[0] $data[1] $data[2] $data[3] $data[4]";
+            $clients[$key]['TX_E']="$data[0] $data[1]";
         }
     }// END Talker stop
 }
     return $clients;
 }
-
 ?>
