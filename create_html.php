@@ -118,7 +118,7 @@ if (count($logs) > 0){
         echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
         echo '<td>'.$logs[$i]['IP'].'</td>';
         if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'tx\'>'.$logs[$i]['STATUS'].'<img src=\'tx.gif\'></td>';
+            echo '<td class=\'tx\'></td>';
         }
         if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
             echo '<td class=\'offline\'>'.$logs[$i]['STATUS'].'</td>';

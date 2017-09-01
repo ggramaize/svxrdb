@@ -15,12 +15,12 @@ $member = array( CLIENTLIST );
 $clients[] = array();
 for($i=0;$i<count($member);$i++){
   $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
-}      
+}
 
 foreach ($logline as $value) {
     $value = str_replace(" CEST:", "",$value);
     if(preg_match("/Login OK from/i", $value)) {
-        $data = explode(" ",$value); //im 5 Call
+    $data = explode(" ",$value); //im 5 Call
     /*
 Array
 (
@@ -44,12 +44,9 @@ Array
         }
         else {
             //member not found add im
-            $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-            $clients[$key]['IP']=substr($data[6], 0, 10);
-            $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_S']="online";
-            $clients[$key]['TX_E']="online";
+            $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
+            'IP'=> substr($data[6], 0, 10), 'STATUS'=> "ONLINE",
+            'TX_S'=> "online", 'TX_E'=> "online");
         }
     } // END Login OK from
 
@@ -81,12 +78,9 @@ Array
             $clients[$key]['TX_E']="offline";
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-            $clients[$key]['IP']=substr($data[4], 0, 10);
-            $clients[$key]['STATUS']="OFFLINE";
-            $clients[$key]['TX_S']="offline";
-            $clients[$key]['TX_E']="offline";
+            $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
+            'IP'=> substr($data[4], 0, 10), 'STATUS'=> "OFFLINE",
+            'TX_S'=> "offline", 'TX_E'=> "offline");
         }
     }// END disconnected: Connection closed
 
@@ -111,10 +105,8 @@ Array
             $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['STATUS']="TX";
-            $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+            $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "TX",
+            'TX_S'=> $data[0]." ".substr($data[1], 0, -1), 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
         }
     }// END Talker start
     
@@ -138,11 +130,11 @@ Array
             $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         } else {
             //member not found add im
-            $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+            $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "ONLINE",
+            'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
         }
     }// END Talker stop
+
 }
     return $clients;
 }
