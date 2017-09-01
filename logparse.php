@@ -1,18 +1,17 @@
 <?php
+include "config.php";
 error_reporting(0);
-date_default_timezone_set('UTC');
 
 function getlastlog() {
-    //$logline = file_get_contents("svxlinkreflector.log");
-    $logline = shell_exec("tac svxlinkreflector.log | head -n 50");
+    $logline = shell_exec("tac ".SVXLRLOGFILE." | head -n 25");
     return $logline;
 }
 
 function getdata() {
-$line_of_text = file_get_contents("svxlinkreflector.log");
+$line_of_text = file_get_contents( SVXLRLOGFILE );
 $logline = explode("\n", $line_of_text);
 
-$member = array( "DL7ATO","DO7EN","DL7ATA","DO0SE","DO8DH");
+$member = array( CLIENTLIST );
 $clients[] = array();
 for($i=0;$i<count($member);$i++){
   $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
@@ -37,7 +36,7 @@ Array
         $data[2] = str_replace(":","",$data[2]);
         if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
             //member found
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
             $clients[$key]['IP']=substr($data[6], 0, 10);
             $clients[$key]['STATUS']="ONLINE";
             $clients[$key]['TX_S']="online";
@@ -46,7 +45,7 @@ Array
         else {
             //member not found add im
             $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
             $clients[$key]['IP']=substr($data[6], 0, 10);
             $clients[$key]['STATUS']="ONLINE";
             $clients[$key]['TX_S']="online";
@@ -75,7 +74,7 @@ Array
         */
         if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
             //member found
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
             $clients[$key]['IP']=substr($data[4], 0, 10);
             $clients[$key]['STATUS']="OFFLINE";
             $clients[$key]['TX_S']="offline";
@@ -83,7 +82,7 @@ Array
         } else {
             //member not found add im
             $clients[] = array('CALL' => $data[2], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
-            $clients[$key]['LOGINOUTTIME']="$data[0] $data[1]";
+            $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
             $clients[$key]['IP']=substr($data[4], 0, 10);
             $clients[$key]['STATUS']="OFFLINE";
             $clients[$key]['TX_S']="offline";
@@ -92,7 +91,7 @@ Array
     }// END disconnected: Connection closed
 
     if(preg_match("/Talker start/i", $value)) {
-        $data = explode(" ",$value); //@7 Call
+        $data = explode(" ",$value);
         $data[3] = str_replace(":","",$data[3]);
         /*
         Array
@@ -108,14 +107,14 @@ Array
         */
         if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
             $clients[$key]['STATUS']="TX";
-            $clients[$key]['TX_S']="$data[0] $data[1]";
-            $clients[$key]['TX_E']="$data[0] $data[1]";
+            $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         } else {
             //member not found add im
             $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
             $clients[$key]['STATUS']="TX";
-            $clients[$key]['TX_S']="$data[0] $data[1]";
-            $clients[$key]['TX_E']="$data[0] $data[1]";
+            $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         }
     }// END Talker start
     
@@ -136,12 +135,12 @@ Array
         */
         if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
             $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_E']="$data[0] $data[1]";
+            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         } else {
             //member not found add im
             $clients[] = array('CALL' => $data[3], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "t_start", 'TX_E'=> "t_stop");
             $clients[$key]['STATUS']="ONLINE";
-            $clients[$key]['TX_E']="$data[0] $data[1]";
+            $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
         }
     }// END Talker stop
 }
