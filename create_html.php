@@ -132,8 +132,9 @@ if (count($logs) > 0){
         echo '</tr>';
     }
 
+    echo '</table>';
+    
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
-        echo '</table>';
         $lastlog=getlastlog();
         echo '<table width=\'80%\'>
             <tr>
