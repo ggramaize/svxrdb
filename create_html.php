@@ -145,5 +145,5 @@ if (count($logs) > 0){
             </table>';
     }
 }
-echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />DO7EN / DJ1JAY <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"></a>v'.DBVERSION;
+echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br /><a rel="github" href="https://github.com/SkyAndy/svxrdb/">DO7EN / DJ1JAY</a> v'.DBVERSION;
 ?>
