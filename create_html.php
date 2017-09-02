@@ -103,7 +103,7 @@ echo '<h2>SxvlinkReflector-Dashboard Logdata: '.date("Y-m-d | H:i:s").'</h2>';
 if (count($logs) > 0){
     echo "<table with:80%><tr><th>Callsign client</th><th>Login / Logout - time</th>";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-            echo "<th>Network adress</th>";
+            echo "<th>Network address</th>";
         }
     echo "<th>state</th><th>QSO run</th><th>QSO stop</th></tr>";
 
