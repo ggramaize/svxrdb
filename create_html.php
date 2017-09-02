@@ -101,22 +101,21 @@ td.logshow {
 echo '<h2>SxvlinkReflector-Dashboard Logdata: '.date("Y-m-d | H:i:s").'</h2>';
 
 if (count($logs) > 0){
-    echo "<table with:80%>
-        <tr>
-        <th>Callsign client</th>
-        <th>Login / Logout - time</th>
-        <th>Network adress</th>
-        <th>state</th>
-        <th>QSO run</th>
-        <th>QSO stop</th>
-        </tr>";
+    echo "<table with:80%><tr><th>Callsign client</th><th>Login / Logout - time</th>";
+        if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
+            echo "<th>Network adress</th>";
+        }
+    echo "<th>state</th><th>QSO run</th><th>QSO stop</th></tr>";
 
     for ($i=0; $i<count($logs, 0); $i++)
     {
         echo '<tr>'; 
         echo '<td>'.$logs[$i]['CALL'].'</td>';
         echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
-        echo '<td>'.$logs[$i]['IP'].'</td>';
+        
+        if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
+            echo '<td>'.$logs[$i]['IP'].'</td>';
+        }
         if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
             echo '<td class=\'tx\'></td>';
         }

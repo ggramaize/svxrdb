@@ -8,19 +8,19 @@ function getlastlog() {
 }
 
 function getdata() {
-$line_of_text = file_get_contents( SVXLRLOGFILE );
-$logline = explode("\n", $line_of_text);
+    $line_of_text = file_get_contents( SVXLRLOGFILE );
+    $logline = explode("\n", $line_of_text);
 
-$member = array( CLIENTLIST );
-$clients[] = array();
-for($i=0;$i<count($member);$i++){
-  $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
-}
+    $member = array( CLIENTLIST );
+    $clients[] = array();
+    for($i=0;$i<count($member);$i++){
+        $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
+    }
 
-foreach ($logline as $value) {
-    $value = str_replace(" CEST:", "",$value);
-    if(preg_match("/Login OK from/i", $value)) {
-    $data = explode(" ",$value); //im 5 Call
+    foreach ($logline as $value) {
+        $value = str_replace(" CEST:", "",$value);
+        if(preg_match("/Login OK from/i", $value)) {
+            $data = explode(" ",$value); //im 5 Call
     /*
 Array
 (
@@ -41,8 +41,7 @@ Array
             $clients[$key]['STATUS']="ONLINE";
             $clients[$key]['TX_S']="online";
             $clients[$key]['TX_E']="online";
-        }
-        else {
+        } else {
             //member not found add im
             $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
             'IP'=> substr($data[6], 0, 10), 'STATUS'=> "ONLINE",
@@ -135,7 +134,7 @@ Array
         }
     }// END Talker stop
 
-}
+    } // END foreach ($logline as $value)
     return $clients;
-}
+} // END unction getdata() 
 ?>
