@@ -3,7 +3,7 @@ include "config.php";
 error_reporting(0);
 
 function getlastlog() {
-    $logline = shell_exec("cat ".SVXLRLOGFILE." | head -n 25");
+    $logline = shell_exec("tac ".SVXLRLOGFILE." | head -n 25");
     return $logline;
 }
 
