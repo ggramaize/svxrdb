@@ -1,7 +1,8 @@
 <?php
+require_once('config.php');
+require_once('function.php');
 require_once('logparse.php');
 require_once('array_column.php');
-require_once('config.php');
 
 $logs = getdata();
 if( count($logs) < 0) {
@@ -55,6 +56,16 @@ td.tx {
     vertical-align:center;
 }
 
+td.double {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    background: #FA5858;
+    background: url(double.png) center center no-repeat;
+    border: 1px solid #DDD;
+    text-align:center;
+    vertical-align:center;
+}
+
 td {
     padding: 0.5em 0.5em;
     text-align: center;
@@ -102,6 +113,9 @@ if (count($logs) > 0){
         }
         if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
             echo '<td class=\'online\'>'.$logs[$i]['STATUS'].'</td>';
+        }
+        if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
+            echo '<td class=\'double\'></td>';
         }
 
         echo '<td>'.$logs[$i]['TX_S'].'</td>';

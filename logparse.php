@@ -115,7 +115,7 @@ Array
         }// END Talker start
         
         if(preg_match("/Talker stop/i", $value)) {
-            $data = explode(" ",$value); //@7 Call
+            $data = explode(" ",$value);
             $data[3] = str_replace(":","",$data[3]);
             /*
             Array
@@ -138,6 +138,32 @@ Array
                 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
             }
         }// END Talker stop
+
+        if(preg_match("/is already talking.../i", $value)) {
+            $data = explode(" ",$value);
+            $data[3] = str_replace(":","",$data[3]);
+            /*
+            Array
+    (
+        [0] => 08.09.2017
+        [1] => 18:30:01:
+        [2] => ###
+        [3] => DD6LK:
+        [4] => DL7ATA
+        [5] => is
+        [6] => already
+        [7] => talking...
+    )           
+            */  
+            if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
+                $clients[$key]['STATUS']="DOUBLE";
+                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+            } else {
+                //member not found add im
+                $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "DOUBLE",
+                'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+            }
+        }// END Talker double stop
 
     } // END foreach ($logline as $value)
     print_r(asort($clients,"DL7ATA"));
