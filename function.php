@@ -18,8 +18,8 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' ) {
 	return $dtd;
 }
 
-function getlastlog() {
-    $data = array_slice(file(SVXLRLOGFILE),SVXRLOGFILECOUNT);
+function getlastlog($logfile, $logcount) {
+    $data = array_slice(file($logfile),$logcount);
     $size = count($data);
     $logline = array();
     for($x=0; $x < SVXRLOGFILECOUNT; $x++) 

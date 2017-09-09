@@ -124,10 +124,17 @@ if (count($logs) > 0){
     }
 
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
-        $lastlog=getlastlog();
+        $lastlog=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT);
+        // $lastlog2=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT); // replease (SVXLRLOGFILE,SVXRLOGFILECOUNT) ("filename.log","50"); 50 count of lines
+        // $lastlog3=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT); // replease (SVXLRLOGFILE,SVXRLOGFILECOUNT) ("filename.log","50"); 50 count of lines
+        
         echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
-            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."</pre></td>
-            </tr>";
+            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."</pre></td></tr>";
+
+        /* example 3 different log merged  
+        echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
+            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."".implode("",$lastlog2)."".implode("",$lastlog3)."</pre></td></tr>";
+        */
     }
     echo "</table>\n\r";
 }
