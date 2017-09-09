@@ -4,10 +4,15 @@ require_once('function.php');
 require_once('logparse.php');
 require_once('array_column.php');
 
-$logs = getdata();
-if( count($logs) < 0) {
-    exit(0);
-}
+$logs = array();
+if(count($LOGFILES,0) >0) {
+    for($i=0; $i<count($LOGFILES,0); $i++) {
+            $lastdata=getdata($LOGFILES[$i]);
+            if(count($lastdata) >1) {
+                $logs=array_merge($logs, $lastdata);
+            }
+    }
+} else { exit(0); }
 
 echo "<html><head>";
 echo "<title>SVXLINKREFLECTOR</title>";
@@ -124,17 +129,21 @@ if (count($logs) > 0){
     }
 
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
-        $lastlog=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT);
-        // $lastlog2=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT); // replease (SVXLRLOGFILE,SVXRLOGFILECOUNT) ("filename.log","50"); 50 count of lines
-        // $lastlog3=getlastlog(SVXLRLOGFILE,SVXRLOGFILECOUNT); // replease (SVXLRLOGFILE,SVXRLOGFILECOUNT) ("filename.log","50"); 50 count of lines
-        
+        $all_logs = array();
+        if(count($LOGFILES,0) >0) {
+            for($i=0; $i<count($LOGFILES); $i++) {
+                $lastlog=getlastlog($LOGFILES[$i], LOGLINECOUNT);
+                $all_logs=array_merge($all_logs, $lastlog);
+            }
+        }
+        /*
         echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
             <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."</pre></td></tr>";
-
-        /* example 3 different log merged  
-        echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
-            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."".implode("",$lastlog2)."".implode("",$lastlog3)."</pre></td></tr>";
         */
+        /* example 3 different log merged */  
+        echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
+            <td class='logshow'; colspan='6'><pre>".implode("",$all_logs)."</pre></td></tr>";
+        
     }
     echo "</table>\n\r";
 }

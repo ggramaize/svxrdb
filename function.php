@@ -22,7 +22,7 @@ function getlastlog($logfile, $logcount) {
     $data = array_slice(file($logfile),$logcount);
     $size = count($data);
     $logline = array();
-    for($x=0; $x < SVXRLOGFILECOUNT; $x++) 
+    for($x=0; $x < $logcount; $x++) 
     {
         array_push($logline,$data[$size-$x]);
     }

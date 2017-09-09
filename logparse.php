@@ -2,12 +2,11 @@
 include "config.php";
 error_reporting(0);
 
-function getdata() {
-    $line_of_text = file_get_contents( SVXLRLOGFILE );
+function getdata($logfilename) {
+    $line_of_text = file_get_contents( $logfilename );
     $logline = explode("\n", $line_of_text);
-
     $member = array( CLIENTLIST );
-    $clients[] = array();
+    //$clients[] = array();
     for($i=0;$i<count($member);$i++){
         $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
     }
