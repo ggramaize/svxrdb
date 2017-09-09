@@ -2,11 +2,6 @@
 include "config.php";
 error_reporting(0);
 
-function getlastlog() {
-    $logline = shell_exec("tac ".SVXLRLOGFILE." | head -n 25");
-    return $logline;
-}
-
 function getdata() {
     $line_of_text = file_get_contents( SVXLRLOGFILE );
     $logline = explode("\n", $line_of_text);
@@ -166,7 +161,6 @@ Array
         }// END Talker double stop
 
     } // END foreach ($logline as $value)
-    print_r(asort($clients,"DL7ATA"));
     return $clients;
 } // END function getdata() 
 

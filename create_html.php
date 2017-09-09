@@ -126,7 +126,7 @@ if (count($logs) > 0){
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
         $lastlog=getlastlog();
         echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
-            <td class='logshow'; colspan='6'><pre>".$lastlog."</pre></td>
+            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."</pre></td>
             </tr>";
     }
     echo "</table>\n\r";
