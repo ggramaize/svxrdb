@@ -9,5 +9,5 @@ define("LOGTABLE", "SHOW" ); // set to SHOW and the last LOGLINECOUNT lines from
 define("DBVERSION", "20170910.1135" );
 define("IPLIST", "SHOWNO"); // set to SHOW and the IP address is showing in HTML
 define("REFRESHSTATUS", "SHOW"); // set to SHOW for see refreshtime
-
+$lastheard_call = "CALL"; //do not change this value
 ?>

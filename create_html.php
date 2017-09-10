@@ -81,6 +81,15 @@ td {
     transition: all 0.6s ease-in;
 }
 
+td.lastheard {
+    padding: 0.5em 0.5em;
+    text-align: center;
+    margin-left: 10px;
+    background: url(ear.png) center center no-repeat;
+    background-position: right center;
+    transition: all 0.6s ease-in;    
+}
+
 td.logshow {
     padding: 0.5em 0.5em;
     text-align: left;
@@ -118,7 +127,13 @@ if (count($logs) > 0){
     {
         if( $logs[$i]['CALL'] != "CALL") {
             echo '<tr>'; 
-            echo '<td>'.$logs[$i]['CALL'].'</td>';
+
+            if (preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) {
+                echo '<td class=\'lastheard\'>'.$logs[$i]['CALL'].'</td>';
+            } else {
+                echo '<td>'.$logs[$i]['CALL'].'</td>';
+            }
+
             echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
             
             if( preg_match('/'.IPLIST.'/i', 'SHOW')) {

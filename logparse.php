@@ -3,6 +3,7 @@ include "config.php";
 error_reporting(0);
 
 function getdata($logfilename) {
+    global $lastheard_call;
     $line_of_text = file_get_contents( $logfilename );
     $logline = explode("\n", $line_of_text);
     $member = array( CLIENTLIST );
@@ -99,12 +100,14 @@ Array
             */
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="TX";
-                $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+                $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "TX",
                 'TX_S'=> $data[0]." ".substr($data[1], 0, -1), 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                $lastheard_call = $data[3];
             }
         }// END Talker start
         
@@ -125,11 +128,13 @@ Array
             */
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="ONLINE";
-                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "ONLINE",
                 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                $lastheard_call = $data[3];
             }
         }// END Talker stop
 
@@ -160,6 +165,7 @@ Array
         }// END Talker double stop
 
     } // END foreach ($logline as $value)
+    print "function ".$lastheard_call;
     return $clients;
 } // END function getdata() 
 
