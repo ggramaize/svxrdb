@@ -6,8 +6,9 @@ $LOGFILES = array( 'svxlinkreflector.log', '', '' ); // path to logfile, 'file1'
 $clients[] = array();
 define("CLIENTLIST", "CALL"); // do not change this value
 define("LOGTABLE", "SHOW" ); // set to SHOW and the last LOGLINECOUNT lines from logfile is showing in HTML
-define("DBVERSION", "20170910.1135" );
+define("DBVERSION", "20170910.2205" );
 define("IPLIST", "SHOWNO"); // set to SHOW and the IP address is showing in HTML
 define("REFRESHSTATUS", "SHOW"); // set to SHOW for see refreshtime
 $lastheard_call = "CALL"; //do not change this value
+define("STYLECSS", "style_normal.css");
 ?>

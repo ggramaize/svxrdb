@@ -15,9 +15,10 @@ if(count($LOGFILES,0) >0) {
 } else { exit(0); }
 
 echo "<html><head>";
-echo "<link rel=\"stylesheet\" href=\"style_normal.css\">";
 echo "<title>SVXLINKREFLECTOR</title>";
 echo "<script src=\"tablesort.js\"></script>\n\r";
+$current_style = file_get_contents(STYLECSS);
+echo "<style type=\"text/css\">".$current_style."</style>\n\r";
 
 if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
     echo "</head><body onload=\"sortTable(4)\">\n\r";
@@ -27,8 +28,8 @@ if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
 
 if (count($logs) > 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
-    echo "<th onclick=\"sortTable(0)\">Callsign client</th>\n\r";
-    echo "<th onclick=\"sortTable(1)\">Login / Logout - time</th>\n\r";
+    echo "<th>Callsign client</th>\n\r";
+    echo "<th>Login / Logout - time</th>\n\r";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
             echo "<th onclick=\"sortTable(2)\">Network address</th>\n\r";
             echo "<th onclick=\"sortTable(3)\">state</th>\n\r";
@@ -37,7 +38,7 @@ if (count($logs) > 0){
         } else {
             echo "<th onclick=\"sortTable(2)\">state</th>\n\r";
             echo "<th onclick=\"sortTable(3)\">QSO run</th>\n\r";
-            echo "<th onclick=\"sortTable(4)\">QSO stop</th>\n\r</tr>\n\r";
+            echo "<th onclick=\"sortTable(4)\">QSO stop</th>\n\r</tr>\n\r";            
         }
 
     for ($i=0; $i<count($logs, 0); $i++)
