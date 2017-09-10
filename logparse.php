@@ -8,7 +8,7 @@ function getdata($logfilename) {
     $member = array( CLIENTLIST );
     //$clients[] = array();
     for($i=0;$i<count($member);$i++){
-        $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "offline", 'TX_S'=> "offline", 'TX_E'=> "offline");
+        $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "OFFLINE", 'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE");
     }
 
     foreach ($logline as $value) {
@@ -68,8 +68,8 @@ Array
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
                 $clients[$key]['IP']=substr($data[4], 0, 10);
                 $clients[$key]['STATUS']="OFFLINE";
-                $clients[$key]['TX_S']="offline";
-                $clients[$key]['TX_E']="offline";
+                $clients[$key]['TX_S']="OFFLINE";
+                $clients[$key]['TX_E']="OFFLINE";
             } else {
                 //member not found add im
                 // ### ReflectorClient::disconnect: Access denied Call "Client" not allowed in list :)
@@ -77,7 +77,7 @@ Array
                 {
                     $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                     'IP'=> substr($data[4], 0, 10), 'STATUS'=> "OFFLINE",
-                    'TX_S'=> "offline", 'TX_E'=> "offline");
+                    'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE");
                 }
             }
         }// END disconnected: Connection closed

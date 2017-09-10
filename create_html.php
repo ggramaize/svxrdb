@@ -90,16 +90,29 @@ td.logshow {
     background-position: right bottom;
     transition: all 0.6s ease-in;
 }
-</style></head><body>\n\r";
+</style>\n\r
+<script src=\"tablesort.js\"></script>\n\r";
+
+if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
+    echo "</head><body onload=\"sortTable(5)\">\n\r";
+} else {
+    echo "</head><body onload=\"sortTable(4)\">\n\r";
+}
 
 if (count($logs) > 0){
-    echo "<table with:80%>\n\r";
-    echo "<tr><th colspan='6'>SxvlinkReflector-Dashboard-Logdata ".date("Y-m-d | H:i:s")."</th></tr>";
-    echo "<tr><th>Callsign client</th><th>Login / Logout - time</th>";
+    echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
+    echo "<th onclick=\"sortTable(0)\">Callsign client</th>\n\r";
+    echo "<th onclick=\"sortTable(1)\">Login / Logout - time</th>\n\r";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-            echo "<th>Network address</th>";
+            echo "<th onclick=\"sortTable(2)\">Network address</th>\n\r";
+            echo "<th onclick=\"sortTable(3)\">state</th>\n\r";
+            echo "<th onclick=\"sortTable(4)\">QSO run</th>\n\r";
+            echo "<th onclick=\"sortTable(5)\">QSO stop</th>\n\r</tr>\n\r";
+        } else {
+            echo "<th onclick=\"sortTable(2)\">state</th>\n\r";
+            echo "<th onclick=\"sortTable(3)\">QSO run</th>\n\r";
+            echo "<th onclick=\"sortTable(4)\">QSO stop</th>\n\r</tr>\n\r";
         }
-    echo "<th>state</th><th>QSO run</th><th>QSO stop</th></tr>\n\r";
 
     for ($i=0; $i<count($logs, 0); $i++)
     {
@@ -127,7 +140,9 @@ if (count($logs) > 0){
         echo '<td>'.$logs[$i]['TX_E'].'</td>';
         echo "</tr>\n\r";
     }
-
+    if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
+        echo "<tr><th colspan='6'>SxvlinkReflector-Dashboard-Refresh ".date("Y-m-d | H:i:s"."</th></tr>\n\r");
+    }
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
         $all_logs = array();
         if(count($LOGFILES,0) >0) {
@@ -136,14 +151,8 @@ if (count($logs) > 0){
                 $all_logs=array_merge($all_logs, $lastlog);
             }
         }
-        /*
         echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
-            <td class='logshow'; colspan='6'><pre>".implode("",$lastlog)."</pre></td></tr>";
-        */
-        /* example 3 different log merged */  
-        echo "<tr><th colspan='6'>Logfile</th></tr>\n\r
-            <td class='logshow'; colspan='6'><pre>".implode("",$all_logs)."</pre></td></tr>";
-        
+        <td class='logshow'; colspan='6'><pre>".implode("",$all_logs)."</pre></td></tr>";
     }
     echo "</table>\n\r";
 }
