@@ -33,7 +33,7 @@ th {
     vertical-align:center;
 }
 
-td.online {
+td.ONLINE {
     font-family: Arial, Helvetica, sans-serif;
     font-size: .8em;
     background: #58FA58;
@@ -94,9 +94,9 @@ td.logshow {
 <script src=\"tablesort.js\"></script>\n\r";
 
 if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-    echo "</head><body onload=\"sortTable(5)\">\n\r";
-} else {
     echo "</head><body onload=\"sortTable(4)\">\n\r";
+} else {
+    echo "</head><body onload=\"sortTable(3)\">\n\r";
 }
 
 if (count($logs) > 0){
@@ -130,7 +130,7 @@ if (count($logs) > 0){
             echo '<td class=\'offline\'>'.$logs[$i]['STATUS'].'</td>';
         }
         if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'online\'>'.$logs[$i]['STATUS'].'</td>';
+            echo '<td class=\'ONLINE\'>'.$logs[$i]['STATUS'].'</td>';
         }
         if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
             echo '<td class=\'double\'></td>';
