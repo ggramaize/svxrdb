@@ -8,19 +8,20 @@
 FUNKTIONEN:
   - beliebig viele Logdateien als Quelle nutzen.
     - Logauszüge ein/ausblenden
-  - Zeit wann der letzte Client seinen Login hatte.
+  - Zeitstempel wann der Client sich mit dem Server verbunden hat.
     - Disconnect wird mit Zeitstempel und OFFLINE angezeigt
   - Clients aus dem Verbund werden automatisch im Log gefunden
-  - Anzeige des Aktuellen Status vom Client
-    - Online / Offline / Icon->"spricht" / Icon->"Kanal belget"
+  - zeigt den Aktuellen Status vom Client
+    - Online / Offline / Icon->"spricht" / Icon->"Kanal belegt"
   - Client Sprechzeiten
     - Anfang / Endzeit
   - Spalte IP-Adresse des Clients
     - zu / abschaltbar
-  - Statusleiste mit der Zeit des letzten Aktualisierung
+    - auf 10 Zeichen gekürzt
+  - Statusleiste mit einem Zeitstempel
     - ein/ausblenden
-  - Tabelle kann durch anklicken sortiert werden
-    - oben das letzte Gespräch
+  - Tabelle kann durch das anklicken im Titel der Spalte sortiert werden
+    - als erstes wird der aktuellste Gesprächsanfang gezeigt
 
 ## HINWEIS:
   - Der Zeitstempel in der svxreflector.conf MUSS so eingestellt sein.
