@@ -15,92 +15,9 @@ if(count($LOGFILES,0) >0) {
 } else { exit(0); }
 
 echo "<html><head>";
+echo "<link rel=\"stylesheet\" href=\"style_normal.css\">";
 echo "<title>SVXLINKREFLECTOR</title>";
-echo "<style type=\"text/css\">
-table {
-margin: 8px;
-}
-
-th {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .8em;
-    background: #666;
-    color: #FFF;
-    padding: 2px 6px;
-    border-collapse: separate;
-    border: 1px solid #000;
-    text-align:center;
-    vertical-align:center;
-}
-
-td.ONLINE {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .8em;
-    background: #58FA58;
-    border: 1px solid #DDD;
-    text-align:center;
-    vertical-align:center;
-}
-
-td.offline {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .8em;
-    background: #BDBDBD;
-    border: 1px solid #DDD;
-    text-align:center;
-    vertical-align:center;
-}
-
-td.tx {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    background: #FA5858;
-    background: url(tx.gif) center center no-repeat;
-    border: 1px solid #DDD;
-    text-align:center;
-    vertical-align:center;
-}
-
-td.double {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    background: #FA5858;
-    background: url(double.png) center center no-repeat;
-    border: 1px solid #DDD;
-    text-align:center;
-    vertical-align:center;
-}
-
-td {
-    padding: 0.5em 0.5em;
-    text-align: center;
-    margin-left: 10px;
-    background: linear-gradient(to left, transparent 50%, #1F7DE2 50%), linear-gradient(#F7f7f7, #EEE);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: all 0.6s ease-in;
-}
-
-td.lastheard {
-    padding: 0.5em 0.5em;
-    text-align: center;
-    margin-left: 10px;
-    background: url(ear.png) center center no-repeat;
-    background-position: right center;
-    transition: all 0.6s ease-in;    
-}
-
-td.logshow {
-    padding: 0.5em 0.5em;
-    text-align: left;
-    font-size: .8em;
-    background: linear-gradient(to left, transparent 50%, #1F7DE2 50%), linear-gradient(#F7f7f7, #EEE);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: all 0.6s ease-in;
-}
-</style>\n\r
-<script src=\"tablesort.js\"></script>\n\r";
+echo "<script src=\"tablesort.js\"></script>\n\r";
 
 if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
     echo "</head><body onload=\"sortTable(4)\">\n\r";

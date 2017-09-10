@@ -165,7 +165,6 @@ Array
         }// END Talker double stop
 
     } // END foreach ($logline as $value)
-    print "function ".$lastheard_call;
     return $clients;
 } // END function getdata() 
 
