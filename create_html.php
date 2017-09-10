@@ -116,29 +116,31 @@ if (count($logs) > 0){
 
     for ($i=0; $i<count($logs, 0); $i++)
     {
-        echo '<tr>'; 
-        echo '<td>'.$logs[$i]['CALL'].'</td>';
-        echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
-        
-        if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-            echo '<td>'.$logs[$i]['IP'].'</td>';
-        }
-        if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'tx\'></td>';
-        }
-        if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'offline\'>'.$logs[$i]['STATUS'].'</td>';
-        }
-        if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'ONLINE\'>'.$logs[$i]['STATUS'].'</td>';
-        }
-        if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
-            echo '<td class=\'double\'></td>';
-        }
+        if( $logs[$i]['CALL'] != "CALL") {
+            echo '<tr>'; 
+            echo '<td>'.$logs[$i]['CALL'].'</td>';
+            echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
+            
+            if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
+                echo '<td>'.$logs[$i]['IP'].'</td>';
+            }
+            if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
+                echo '<td class=\'tx\'></td>';
+            }
+            if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
+                echo '<td class=\'offline\'>'.$logs[$i]['STATUS'].'</td>';
+            }
+            if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
+                echo '<td class=\'ONLINE\'>'.$logs[$i]['STATUS'].'</td>';
+            }
+            if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
+                echo '<td class=\'double\'></td>';
+            }
 
-        echo '<td>'.$logs[$i]['TX_S'].'</td>';
-        echo '<td>'.$logs[$i]['TX_E'].'</td>';
-        echo "</tr>\n\r";
+            echo '<td>'.$logs[$i]['TX_S'].'</td>';
+            echo '<td>'.$logs[$i]['TX_E'].'</td>';
+            echo "</tr>\n\r";
+        }
     }
     if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
         echo "<tr><th colspan='6'>SxvlinkReflector-Dashboard-Refresh ".date("Y-m-d | H:i:s"."</th></tr>\n\r");
