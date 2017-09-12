@@ -72,6 +72,9 @@ if (count($logs) > 0){
             if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
                 echo '<td class=\'double\'></td>';
             }
+            if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
+                echo '<td class=\'denied\'></td>';
+            }
 
             echo '<td>'.$logs[$i]['TX_S'].'</td>';
             echo '<td>'.$logs[$i]['TX_E'].'</td>';

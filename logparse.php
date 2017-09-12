@@ -165,12 +165,40 @@ Array
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DOUBLE";
                 $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "DOUBLE",
                 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
             }
         }// END Talker double stop
+
+        // Server login failure
+        if((preg_match("/[Access denied]{6}/",  $value)) AND (strlen($value)<=57 )) {
+            $data = explode(" ",$value);
+            $data[2] = str_replace(":","",$data[2]);
+            /*
+        Array
+    (
+        [0] => 12.09.2017
+        [1] => 16:05:10:
+        [2] => DO0SE:
+        [3] => Access
+        [4] => denied
+    )
+            */  
+            if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
+                $clients[$key]['STATUS']="DENIED";
+                $clients[$key]['LOGINOUTTIME']="ACCESS DENIED"; //: remoed from timestring
+                $clients[$key]['IP']="ACCESS DENIED";
+                $clients[$key]['TX_S']="ACCESS DENIED";
+                $clients[$key]['TX_E']="ACCESS DENIED";
+            } else {
+                //member not found add im
+                $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DENIED",
+                'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+            }
+        }// END Server login failure
 
     } // END foreach ($logline as $value)
    // Recovering old data logrotate issues
