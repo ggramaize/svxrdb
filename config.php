@@ -11,5 +11,5 @@ define("IPLIST", "SHOWNO"); // set to SHOW and the IP address is showing in HTML
 define("REFRESHSTATUS", "SHOW"); // set to SHOW for see refreshtime
 $lastheard_call = "CALL"; //do not change this value
 define("STYLECSS", "style_normal.css");
-define("RECOVER", "YES"); // set to YES use for save client data an recover it after logrotate for SDCard User not recommended
+define("RECOVER", "NO"); // set to YES for save client data an recover it after logrotate for SDCard User not recommended
 ?>
