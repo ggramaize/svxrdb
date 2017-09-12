@@ -74,6 +74,7 @@ td {
 
 td.lastheard {
     padding: 0.5em 0.5em;
+    width: 120px;
     text-align: center;
     margin-left: 10px;
     background: url(ear.png) center center no-repeat;
