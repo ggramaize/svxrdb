@@ -4,12 +4,20 @@ error_reporting(0);
 
 function getdata($logfilename) {
     global $lastheard_call;
+
     $line_of_text = file_get_contents( $logfilename );
     $logline = explode("\n", $line_of_text);
     $member = array( CLIENTLIST );
-    //$clients[] = array();
+
     for($i=0;$i<count($member);$i++){
         $clients[$i] = array('CALL' => $member[$i], 'LOGINOUTTIME'=> "time", 'IP'=> "ip", 'STATUS'=> "OFFLINE", 'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE");
+    }
+
+    // Recovering old data logrotate issues
+    if ( preg_match('/'.RECOVER.'/i', 'YES') ) {
+        $recoveredData = file_get_contents("recover_data_".$logfilename);
+        $recoveredArray = unserialize($recoveredData);
+        $clients=array_merge($clients, $recoveredArray);
     }
 
     foreach ($logline as $value) {
@@ -45,7 +53,7 @@ Array
             }
         } // END Login OK from
 
-        if(preg_match("/disconnected: Connection closed/i", $value)) {
+        if((preg_match("/disconnected: Connection closed/i", $value)) OR (preg_match("/disconnected: Locally ordered/i", $value))) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
             /*
@@ -165,6 +173,18 @@ Array
         }// END Talker double stop
 
     } // END foreach ($logline as $value)
+   // Recovering old data logrotate issues
+    if ( preg_match('/'.RECOVER.'/i', 'YES') ) {
+        // cleanup array from CALL
+        for ($i=0; $i<count($clients, 0); $i++) {
+            if ($clients[$i]['CALL'] == "CALL")
+            {
+                unset($clients[$i]);
+            }
+        }
+        $serialized_data = serialize($clients);
+        file_put_contents("recover_data_".$logfilename, $serialized_data);
+    }
     return $clients;
 } // END function getdata() 
 

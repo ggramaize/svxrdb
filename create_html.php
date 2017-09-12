@@ -7,10 +7,13 @@ require_once('array_column.php');
 $logs = array();
 if(count($LOGFILES,0) >0) {
     for($i=0; $i<count($LOGFILES,0); $i++) {
+        // check if filename size greater as zero
+        if(empty($LOGFILES[$i])) { } else {
             $lastdata=getdata($LOGFILES[$i]);
             if(count($lastdata) >1) {
                 $logs=array_merge($logs, $lastdata);
             }
+        }// END check filname zize check
     }
 } else { exit(0); }
 
@@ -33,17 +36,17 @@ if (count($logs) > 0){
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
             echo "<th onclick=\"sortTable(2)\">Network address</th>\n\r";
             echo "<th onclick=\"sortTable(3)\">state</th>\n\r";
-            echo "<th onclick=\"sortTable(4)\">QSO run</th>\n\r";
-            echo "<th onclick=\"sortTable(5)\">QSO stop</th>\n\r</tr>\n\r";
+            echo "<th onclick=\"sortTable(4)\">Tx on</th>\n\r";
+            echo "<th onclick=\"sortTable(5)\">Tx off</th>\n\r</tr>\n\r";
         } else {
             echo "<th onclick=\"sortTable(2)\">state</th>\n\r";
-            echo "<th onclick=\"sortTable(3)\">QSO run</th>\n\r";
-            echo "<th onclick=\"sortTable(4)\">QSO stop</th>\n\r</tr>\n\r";            
+            echo "<th onclick=\"sortTable(3)\">TX on</th>\n\r";
+            echo "<th onclick=\"sortTable(4)\">Tx off</th>\n\r</tr>\n\r";            
         }
 
     for ($i=0; $i<count($logs, 0); $i++)
     {
-        if( $logs[$i]['CALL'] != "CALL") {
+        if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
             echo '<tr>'; 
 
             if (preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) {
