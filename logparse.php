@@ -214,13 +214,13 @@ Array
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
 
-    $clients_sort = array();
-    foreach ($clients as $key => $value) {
-         $clients_sort[$key] = $value['TX_S'];
-     } 
-     array_multisort($clients_sort, SORT_DESC, $clients);
-
     if (preg_match('/'.LASTHEARD.'/i', 'TOP')) {
+        $clients_sort = array();
+        foreach ($clients as $key => $value) {
+            $clients_sort[$key] = $value['TX_S'];
+        } 
+        array_multisort($clients_sort, SORT_DESC, $clients);
+
         $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
         $value = $clients[$last_key];
         unset($clients[$last_key]);
