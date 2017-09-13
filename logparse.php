@@ -43,13 +43,13 @@ Array
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
                 $clients[$key]['IP']=substr($data[6], 0, 10);
                 $clients[$key]['STATUS']="ONLINE";
-                $clients[$key]['TX_S']="ONLINE";
-                $clients[$key]['TX_E']="ONLINE";
+                $clients[$key]['TX_S']=substr($data[1], 0, -1);
+                $clients[$key]['TX_E']=substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
-                'IP'=> substr($data[6], 0, 10), 'STATUS'=> "ONLINE",
-                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE");
+                'IP'=> substr($data[6], 0, 10), 'STATUS'=> 'ONLINE',
+                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1));
             }
         } // END Login OK from
 
@@ -108,13 +108,13 @@ Array
             */
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="TX";
-                $clients[$key]['TX_S']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
-                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['TX_S']=substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
                 $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "TX",
-                'TX_S'=> $data[0]." ".substr($data[1], 0, -1), 'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1));
                 $lastheard_call = $data[3];
             }
         }// END Talker start
@@ -136,12 +136,12 @@ Array
             */
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="ONLINE";
-                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
                 $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "ONLINE",
-                'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1));
                 $lastheard_call = $data[3];
             }
         }// END Talker stop
@@ -164,12 +164,12 @@ Array
             */  
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DOUBLE";
-                $clients[$key]['TX_E']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
+                $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remoed from timestring
 
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "DOUBLE",
-                'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1));
             }
         }// END Talker double stop
 
@@ -196,7 +196,7 @@ Array
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DENIED",
-                'TX_E'=> $data[0]." ".substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1));
             }
         }// END Server login failure
 
@@ -213,6 +213,20 @@ Array
         $serialized_data = serialize($clients);
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
+
+    $clients_sort = array();
+    foreach ($clients as $key => $value) {
+         $clients_sort[$key] = $value['TX_S'];
+     } 
+     array_multisort($clients_sort, SORT_DESC, $clients);
+
+    if (preg_match('/'.LASTHEARD.'/i', 'TOP')) {
+        $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
+        $value = $clients[$last_key];
+        unset($clients[$last_key]);
+        $clients = array($value) + $clients;
+    }
+
     return $clients;
 } // END function getdata() 
 

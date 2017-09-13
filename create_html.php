@@ -10,38 +10,32 @@ if(count($LOGFILES,0) >0) {
         // check if filename size greater as zero
         if(empty($LOGFILES[$i])) { } else {
             $lastdata=getdata($LOGFILES[$i]);
-            if(count($lastdata) >1) {
+            if(count($lastdata) >0) {
                 $logs=array_merge($logs, $lastdata);
             }
-        }// END check filname zize check
+        }// END check filname size check
     }
 } else { exit(0); }
 
 echo "<html><head>";
 echo "<title>SVXLINKREFLECTOR</title>";
-echo "<script src=\"tablesort.js\"></script>\n\r";
+
 $current_style = file_get_contents(STYLECSS);
 echo "<style type=\"text/css\">".$current_style."</style>\n\r";
 
-if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-    echo "</head><body onload=\"sortTable(4)\">\n\r";
-} else {
-    echo "</head><body onload=\"sortTable(3)\">\n\r";
-}
-
-if (count($logs) > 0){
+if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
     echo "<th>Callsign client</th>\n\r";
     echo "<th>Login / Logout - time</th>\n\r";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-            echo "<th onclick=\"sortTable(2)\">Network address</th>\n\r";
-            echo "<th onclick=\"sortTable(3)\">state</th>\n\r";
-            echo "<th onclick=\"sortTable(4)\">Tx on</th>\n\r";
-            echo "<th onclick=\"sortTable(5)\">Tx off</th>\n\r</tr>\n\r";
+            echo "<th>Network address</th>\n\r";
+            echo "<th>state</th>\n\r";
+            echo "<th>Tx on</th>\n\r";
+            echo "<th>Tx off</th>\n\r</tr>\n\r";
         } else {
-            echo "<th onclick=\"sortTable(2)\">state</th>\n\r";
-            echo "<th onclick=\"sortTable(3)\">TX on</th>\n\r";
-            echo "<th onclick=\"sortTable(4)\">Tx off</th>\n\r</tr>\n\r";            
+            echo "<th>state</th>\n\r";
+            echo "<th>TX on</th>\n\r";
+            echo "<th>Tx off</th>\n\r</tr>\n\r";            
         }
 
     for ($i=0; $i<count($logs, 0); $i++)
@@ -49,7 +43,7 @@ if (count($logs) > 0){
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
             echo '<tr>'; 
 
-            if (preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) {
+            if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.LASTHEARD.'/i', 'EAR')) ) {
                 echo '<td class=\'lastheard\'>'.$logs[$i]['CALL'].'</td>';
             } else {
                 echo '<td>'.$logs[$i]['CALL'].'</td>';
@@ -86,7 +80,7 @@ if (count($logs) > 0){
     }
     if( preg_match('/'.LOGTABLE.'/i', 'SHOW')) {
         $all_logs = array();
-        if(count($LOGFILES,0) >0) {
+        if(count($LOGFILES,0) >=0) {
             for($i=0; $i<count($LOGFILES); $i++) {
                 $lastlog=getlastlog($LOGFILES[$i], LOGLINECOUNT);
                 $all_logs=array_merge($all_logs, $lastlog);
