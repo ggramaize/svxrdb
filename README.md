@@ -1,4 +1,4 @@
-# svxrbb
+# svxrdb
   - Das svxrdb ist ein einfaches Dashboard für den Service svxreflektor(Server Seite).
 
 - INSTALLATION:
