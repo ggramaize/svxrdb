@@ -39,17 +39,17 @@ echo "<style type=\"text/css\">".$current_style."</style></head>\n\r";
 
 if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
-    echo "<th class=\"tbheadsort\" onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
+    echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
     echo "<th>Login / Logout - time</th>\n\r";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
             echo "<th>Network address</th>\n\r";
-            echo "<th class=\"tbheadsort\" onclick=tabSort(\"TOP\")>state</th>\n\r";
+            echo "<th onclick=tabSort(\"TOP\")>state</th>\n\r";
             echo "<th>Tx on</th>\n\r";
-            echo "<th>Tx off</th>\n\r</tr>\n\r";
+            echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r</tr>\n\r";
         } else {
-            echo "<th class=\"tbheadsort\" onclick=tabSort(\"TOP\")>state</th>\n\r";
+            echo "<th>state</th>\n\r";
             echo "<th>Tx on</th>\n\r";
-            echo "<th>Tx off</th>\n\r</tr>\n\r";            
+            echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r</tr>\n\r";            
         }
 
     for ($i=0; $i<count($logs, 0); $i++)

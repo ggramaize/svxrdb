@@ -48,14 +48,14 @@ Array
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
                 $clients[$key]['IP']=substr($data[6], 0, 10);
                 $clients[$key]['STATUS']="ONLINE";
-                $clients[$key]['TX_S']=substr($data[1], 0, -1);
-                $clients[$key]['TX_E']=substr($data[1], 0, -1);
+                $clients[$key]['TX_S']="ONLINE";
+                $clients[$key]['TX_E']="ONLINE";
                 $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                 'IP'=> substr($data[6], 0, 10), 'STATUS'=> 'ONLINE',
-                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1));
+                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE");
             }
         } // END Login OK from
 
