@@ -11,7 +11,7 @@ th {
     border-collapse: separate;
     border: 1px solid #000;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td.ONLINE {
@@ -20,7 +20,7 @@ td.ONLINE {
     background: #58FA58;
     border: 1px solid #DDD;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td.offline {
@@ -29,7 +29,7 @@ td.offline {
     background: #BDBDBD;
     border: 1px solid #DDD;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td.tx {
@@ -39,7 +39,7 @@ td.tx {
     background: url(tx.gif) center center no-repeat;
     border: 1px solid #DDD;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td.double {
@@ -49,7 +49,7 @@ td.double {
     background: url(double.png) center center no-repeat;
     border: 1px solid #DDD;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td.denied {
@@ -59,7 +59,7 @@ td.denied {
     background: url(accden.png) center center no-repeat;
     border: 1px solid #DDD;
     text-align:center;
-    vertical-align:center;
+    vertical-align: middle;
 }
 
 td {

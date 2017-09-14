@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 date_default_timezone_set('Europe/Berlin'); // http://php.net/manual/de/timezones.europe.php
 
@@ -25,15 +26,15 @@ recover data stored in base directory from ...www/svxrdb/recover_data_xxxxxx */
 define("RECOVER", "NO"); 
 
 /* use "EAR" to mark with the icon of the last transmission.
-use "TOP" as a keyword to see the last transmission in the first place in the list (EAR is no longer seen automatically) */
-define("LASTHEARD", "TOP"); // EAR or TOP
+use "TOP" as a keyword to see the last transmission in the first place in the list (EAR is no longer seen automatically) change it on runntime with click on "Callsign client" or "state" table header */
+$LASTHEARD = "TOP"; // EAR or TOP
 
 
 
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20170913.1739" );
+define("DBVERSION", "20170914.1107" );
 $lastheard_call = "CALL";
 $clients[] = array();
 // ----

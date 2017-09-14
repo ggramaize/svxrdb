@@ -4,6 +4,10 @@ require_once('function.php');
 require_once('logparse.php');
 require_once('array_column.php');
 
+if(isset($_COOKIE["svxrdb"])) { 
+    $LASTHEARD = $_COOKIE["svxrdb"];
+}
+
 $logs = array();
 if(count($LOGFILES,0) >0) {
     for($i=0; $i<count($LOGFILES,0); $i++) {
@@ -17,24 +21,34 @@ if(count($LOGFILES,0) >0) {
     }
 } else { exit(0); }
 
-echo "<html><head>";
-echo "<title>SVXLINKREFLECTOR</title>";
+echo "<!DOCTYPE html>";
+echo "<html lang=\"de\"><head>\r\n";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>";
+echo '<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<link rel="manifest" href="/favicons/manifest.json">
+<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">';
+
+echo "\r\n<title>SVXLINKREFLECTOR</title>";
+echo "<script src=\"tablesort.js\"></script>\n\r";
 
 $current_style = file_get_contents(STYLECSS);
-echo "<style type=\"text/css\">".$current_style."</style>\n\r";
+echo "<style type=\"text/css\">".$current_style."</style></head>\n\r";
 
 if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
-    echo "<th>Callsign client</th>\n\r";
+    echo "<th class=\"tbheadsort\" onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
     echo "<th>Login / Logout - time</th>\n\r";
         if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
             echo "<th>Network address</th>\n\r";
-            echo "<th>state</th>\n\r";
+            echo "<th class=\"tbheadsort\" onclick=tabSort(\"TOP\")>state</th>\n\r";
             echo "<th>Tx on</th>\n\r";
             echo "<th>Tx off</th>\n\r</tr>\n\r";
         } else {
-            echo "<th>state</th>\n\r";
-            echo "<th>TX on</th>\n\r";
+            echo "<th class=\"tbheadsort\" onclick=tabSort(\"TOP\")>state</th>\n\r";
+            echo "<th>Tx on</th>\n\r";
             echo "<th>Tx off</th>\n\r</tr>\n\r";            
         }
 
@@ -43,7 +57,7 @@ if (count($logs) >= 0){
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
             echo '<tr>'; 
 
-            if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.LASTHEARD.'/i', 'EAR')) ) {
+            if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
                 echo '<td class=\'lastheard\'>'.$logs[$i]['CALL'].'</td>';
             } else {
                 echo '<td>'.$logs[$i]['CALL'].'</td>';

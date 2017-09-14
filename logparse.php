@@ -2,9 +2,14 @@
 include "config.php";
 error_reporting(0);
 
-function getdata($logfilename) {
-    global $lastheard_call;
 
+function getdata($logfilename) {
+    global $lastheard_call, $LASTHEARD;
+    
+    if(isset($_COOKIE["svxrdb"])) { 
+        $LASTHEARD = $_COOKIE["svxrdb"];
+    }
+    
     $line_of_text = file_get_contents( $logfilename );
     $logline = explode("\n", $line_of_text);
     $member = array( CLIENTLIST );
@@ -45,6 +50,7 @@ Array
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_S']=substr($data[1], 0, -1);
                 $clients[$key]['TX_E']=substr($data[1], 0, -1);
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
@@ -79,6 +85,7 @@ Array
                 $clients[$key]['STATUS']="OFFLINE";
                 $clients[$key]['TX_S']="OFFLINE";
                 $clients[$key]['TX_E']="OFFLINE";
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 // ### ReflectorClient::disconnect: Access denied Call "Client" not allowed in list :)
@@ -86,7 +93,7 @@ Array
                 {
                     $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                     'IP'=> substr($data[4], 0, 10), 'STATUS'=> "OFFLINE",
-                    'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE");
+                    'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE", 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
                 }
             }
         }// END disconnected: Connection closed
@@ -110,11 +117,12 @@ Array
                 $clients[$key]['STATUS']="TX";
                 $clients[$key]['TX_S']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "TX",
-                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1));
+                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1));
                 $lastheard_call = $data[3];
             }
         }// END Talker start
@@ -137,11 +145,12 @@ Array
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[3];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "ONLINE",
-                'TX_E'=> substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
                 $lastheard_call = $data[3];
             }
         }// END Talker stop
@@ -165,11 +174,12 @@ Array
             if (($key = array_search($data[3], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DOUBLE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remoed from timestring
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
 
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[3], 'STATUS'=> "DOUBLE",
-                'TX_E'=> substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
             }
         }// END Talker double stop
 
@@ -193,14 +203,16 @@ Array
                 $clients[$key]['IP']="ACCESS DENIED";
                 $clients[$key]['TX_S']="ACCESS DENIED";
                 $clients[$key]['TX_E']="ACCESS DENIED";
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DENIED",
-                'TX_E'=> substr($data[1], 0, -1));
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
             }
         }// END Server login failure
 
     } // END foreach ($logline as $value)
+
    // Recovering old data logrotate issues
     if ( preg_match('/'.RECOVER.'/i', 'YES') ) {
         // cleanup array from CALL
@@ -213,11 +225,10 @@ Array
         $serialized_data = serialize($clients);
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
-
-    if (preg_match('/'.LASTHEARD.'/i', 'TOP')) {
+    if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
-            $clients_sort[$key] = $value['TX_S'];
+            $clients_sort[$key] = $value['SID'];
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
 

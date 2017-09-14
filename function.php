@@ -1,5 +1,7 @@
 <?php
 error_reporting(0);
+session_start();
+
 # dateDifference
 /*
 	$qso_time = dateDifference("01.09.2017 19:00:10","01.09.2017 18:00:00");
