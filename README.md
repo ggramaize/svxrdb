@@ -71,4 +71,6 @@ FUNCTIONS:
   - TIMESTAMP_FORMAT="%d.%m.%Y %H:%M:%S"
   - Reload Time value(ms) defined in index.html at line 14
 
+Danke für die Ideen und Anregungen an DL7ATA / DJ1JAY 
+
 73 Andy

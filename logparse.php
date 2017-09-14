@@ -2,7 +2,6 @@
 include "config.php";
 error_reporting(0);
 
-
 function getdata($logfilename) {
     global $lastheard_call, $LASTHEARD;
     
@@ -29,19 +28,19 @@ function getdata($logfilename) {
         $value = str_replace(" CEST:", "",$value);
 
         if(preg_match("/Login OK from/i", $value)) {
-            $data = explode(" ",$value); //im 5 Call
-    /*
-Array
-(
-    [0] => 01.09.2017
-    [1] => 18:02:47:
-    [2] => DO0SE:
-    [3] => Login
-    [4] => OK
-    [5] => from
-    [6] => 79.240.57.65:50468
-)
-    */
+            $data = explode(" ",$value);
+            /*
+    Array
+    (
+        [0] => 01.09.2017
+        [1] => 18:02:47:
+        [2] => DO0SE:
+        [3] => Login
+        [4] => OK
+        [5] => from
+        [6] => 79.240.57.65:50468
+    )
+            */
             $data[2] = str_replace(":","",$data[2]);
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 //member found
@@ -85,9 +84,9 @@ Array
                 $clients[$key]['STATUS']="OFFLINE";
                 $clients[$key]['TX_S']="OFFLINE";
                 $clients[$key]['TX_E']="OFFLINE";
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
             } else {
-                //member not found add im
+                // member not found add im
                 // ### ReflectorClient::disconnect: Access denied Call "Client" not allowed in list :)
                 if ($data[2] !== "Client")
                 {
@@ -225,17 +224,18 @@ Array
         $serialized_data = serialize($clients);
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
+
+    $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
+    $value = $clients[$last_key];
+    unset($clients[$last_key]);
+    $clients = array($value) + $clients;
+
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
-
-        $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
-        $value = $clients[$last_key];
-        unset($clients[$last_key]);
-        $clients = array($value) + $clients;
     }
 
     return $clients;

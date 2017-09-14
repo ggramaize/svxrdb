@@ -1,13 +1,12 @@
 <?php
-session_start();
 
 date_default_timezone_set('Europe/Berlin'); // http://php.net/manual/de/timezones.europe.php
 
 // set to SHOW and the last LOGLINECOUNT lines from logfile is showing in HTML
-define("LOGTABLE", "SHOW" );
+define("LOGFILETABLE", "SHOW" );
 
 // ammount of line to show
-define("LOGLINECOUNT", "25");
+define("LOGLINECOUNT", "20");
 
 // full path to logfile with read access for http deamon, 'file1', 'file2', 'file3', 'file4' ....
 $LOGFILES = array( 'svxlinkreflector.log', '', '' ); 
@@ -34,7 +33,7 @@ $LASTHEARD = "TOP"; // EAR or TOP
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20170914.1455" );
+define("DBVERSION", "20170915.0117" );
 $lastheard_call = "CALL";
 $clients[] = array();
 // ----
