@@ -61,7 +61,7 @@ if (count($logs) >= 0){
             if($logs[$i]['CALL'] === 'DL7ATA') { $logs[$i]['COMMENT']="Frank   430.025 MHz Berlin"; };
             if($logs[$i]['CALL'] === 'DO0SE') { $logs[$i]['COMMENT']="Andy(DO7EN) 432.875 Mhz DP25  Hennigsdorf"; };
             if($logs[$i]['CALL'] === 'DD6LK') { $logs[$i]['COMMENT']="Bernhard  Ehrenkirchen"; };
-            if($logs[$i]['CALL'] === 'DB0MGN-2m') { $logs[$i]['COMMENT']="Sven(DJ1JAY) Thüringen"; };
+            if($logs[$i]['CALL'] === 'DB0MGN-2m') { $logs[$i]['COMMENT']="Jens(DJ1JAY) Thüringen"; };
             if($logs[$i]['CALL'] === 'DL7ATO') { $logs[$i]['COMMENT']="Manfred  Berlin"; };
             if($logs[$i]['CALL'] === 'V51SA') { $logs[$i]['COMMENT']="Angela   Namibia"; };
             /* END EXTRA HACK END*/

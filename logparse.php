@@ -227,16 +227,16 @@ function getdata($logfilename) {
     }
 
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
+        $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
+        $value = $clients[$last_key];
+        unset($clients[$last_key]);
+        $clients = array($value) + $clients;
+
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
-
-        $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
-        $value = $clients[$last_key];
-        unset($clients[$last_key]);
-        $clients = array($value) + $clients;
 
     }
 
