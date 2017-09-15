@@ -49,12 +49,13 @@ function getdata($logfilename) {
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_S']="ONLINE";
                 $clients[$key]['TX_E']="ONLINE";
+                $clients[$key]['COMMENT']="new client ".$data[0]." ".substr($data[1], 0, -1);
                 $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                 'IP'=> substr($data[6], 0, 10), 'STATUS'=> 'ONLINE',
-                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE");
+                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE", 'COMMENT'=>"new client ".$data[0]." ".substr($data[1], 0, -1));
             }
         } // END Login OK from
 
@@ -225,17 +226,18 @@ function getdata($logfilename) {
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
 
-    $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
-    $value = $clients[$last_key];
-    unset($clients[$last_key]);
-    $clients = array($value) + $clients;
-
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
+
+        $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
+        $value = $clients[$last_key];
+        unset($clients[$last_key]);
+        $clients = array($value) + $clients;
+
     }
 
     return $clients;

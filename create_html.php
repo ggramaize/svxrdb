@@ -42,13 +42,13 @@ echo "<style type=\"text/css\">".$current_style."</style></head>\n\r";
 if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
     echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
-    echo "<th>Login / Logout - time</th>\n\r";
+    echo "<th>Connection</th>\n\r";
     
     if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
         echo "<th>Network address</th>\n\r";
     }
     
-    echo "<th>state</th>\n\r";
+    echo '<th class="state">state</th>'."\n\r";
     echo "<th>Tx on</th>\n\r";
     echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r";
     
@@ -56,37 +56,66 @@ if (count($logs) >= 0){
     {
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
             echo '<tr>'; 
-            
+
+            /* EXTRA INFO EXAMPLE DO0SE Server */
+            if($logs[$i]['CALL'] === 'DL7ATA') { $logs[$i]['COMMENT']="Frank   430.025 MHz Berlin"; };
+            if($logs[$i]['CALL'] === 'DO0SE') { $logs[$i]['COMMENT']="Andy(DO7EN) 432.875 Mhz DP25  Hennigsdorf"; };
+            if($logs[$i]['CALL'] === 'DD6LK') { $logs[$i]['COMMENT']="Bernhard  Ehrenkirchen"; };
+            if($logs[$i]['CALL'] === 'DB0MGN-2m') { $logs[$i]['COMMENT']="Sven(DJ1JAY) Thüringen"; };
+            if($logs[$i]['CALL'] === 'DL7ATO') { $logs[$i]['COMMENT']="Manfred  Berlin"; };
+            if($logs[$i]['CALL'] === 'V51SA') { $logs[$i]['COMMENT']="Angela   Namibia"; };
+            /* END EXTRA HACK END*/
+
             if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
-                if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
-                    echo '<td class=\'lastheard\'>'.$logs[$i]['CALL'].'</td>';
+
+                if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
+                    echo '<td class="grey"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
                 } else {
-                    echo '<td>'.$logs[$i]['CALL'].'</td>';
+                        if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
+                            echo '<td class="red"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                        } else {
+                            echo '<td class="green"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                        }
                 }
-                echo '<td>'.$logs[$i]['LOGINOUTTIME'].'</td>';
+                
+                echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
                 
                 if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-                    echo '<td>'.$logs[$i]['IP'].'</td>';
+                    echo '<td class="grey">'.$logs[$i]['IP'].'</td>';
                 }
                 if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'tx\'></td>';
                 }
                 if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
-                    echo '<td class=\'offline\'>'.$logs[$i]['STATUS'].'</td>';
+                    echo '<td class="grey"></td>';
                 }
+
                 if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
-                    echo '<td class=\'ONLINE\'>'.$logs[$i]['STATUS'].'</td>';
+                    if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
+                        echo '<td class="ear"></td>';
+                    } else { 
+                        echo '<td class="grey"></td>';
+                    }
                 }
+
                 if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'double\'></td>';
                 }
+
                 if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'denied\'></td>';
                 }
-                echo '<td>'.$logs[$i]['TX_S'].'</td>';
-                echo '<td>'.$logs[$i]['TX_E'].'</td>';
+      
+                if(preg_match('/TX/i',$logs[$i]['STATUS'])) {
+                    echo '<td class="yellow">'.$logs[$i]['TX_S'].'</td>';
+                    echo '<td class="yellow">'.$logs[$i]['TX_E'].'</td>';
+                } else {
+                    echo '<td class="grey">'.$logs[$i]['TX_S'].'</td>';
+                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';                
+                }
                 echo "</tr>\n\r";
-            }
+            
+            } // END NEWLOGFILEDATA FALSE
             // add marker for new logfiledata
             if (preg_match('/NEWLOGFILEDATA/i', $logs[$i]['CALL'])) {
                 echo "<tr><th class='logline' colspan='6'></th></tr>\n\r";
