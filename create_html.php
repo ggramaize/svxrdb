@@ -68,14 +68,14 @@ if (count($logs) >= 0){
 
             if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
 
-                if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
-                    echo '<td class="grey"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
-                } else {
-                        if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
-                            echo '<td class="red"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
-                        } else {
-                            echo '<td class="green"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
-                        }
+                if ( ($logs[$i]['STATUS'] === "ONLINE") OR ($logs[$i]['STATUS'] === "TX") ) {
+                    echo '<td class="green"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                }
+                if ($logs[$i]['STATUS'] === "OFFLINE") {
+                    echo '<td class="darkgrey"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                }
+                if ( ($logs[$i]['STATUS'] === "DOUBLE") OR ($logs[$i]['STATUS'] === "DENIED") ){
+                    echo '<td class="red"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
                 }
                 
                 echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
