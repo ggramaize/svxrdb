@@ -15,3 +15,7 @@ function createCookie(name, value, day) {
  	}
   	document.cookie = escape(name) + "=" + escape(value) + expires + "path=/";
  }
+
+function popinfo(textmsg) {
+	console.log("%s", textmsg);
+}

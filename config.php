@@ -33,7 +33,7 @@ $LASTHEARD = "EAR"; // EAR or TOP
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20170915.2037" );
+define("DBVERSION", "20170918.0009" );
 $lastheard_call = "CALL";
 $clients[] = array();
 // ----

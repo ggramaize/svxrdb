@@ -4,6 +4,7 @@ require_once('config.php');
 require_once('function.php');
 require_once('logparse.php');
 require_once('array_column.php');
+require_once('userdb.php');
 
 if(isset($_COOKIE["svxrdb"])) { 
     $LASTHEARD = $_COOKIE["svxrdb"];
@@ -22,6 +23,13 @@ if(count($LOGFILES,0) >0) {
         }// END check filname size check
     }
 } else { exit(0); }
+
+/* loading userdb for mouse hover textinfo from userdb.php */
+for ($i=0; $i<count($logs, 0); $i++) {
+    if (isset($userdb_array[$logs[$i]['CALL']], $userdb_array)) {
+       $logs[$i]['COMMENT'] = $userdb_array[$logs[$i]['CALL']];
+    }
+}
 
 echo "<!DOCTYPE html>";
 echo "<html lang=\"de\"><head>\r\n";
@@ -56,15 +64,6 @@ if (count($logs) >= 0){
     {
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
             echo '<tr>'; 
-
-            /* EXTRA INFO EXAMPLE DO0SE Server */
-            if($logs[$i]['CALL'] === 'DL7ATA') { $logs[$i]['COMMENT']="Frank   430.025 MHz Berlin"; };
-            if($logs[$i]['CALL'] === 'DO0SE') { $logs[$i]['COMMENT']="Andy(DO7EN) 432.875 Mhz DP25  Hennigsdorf"; };
-            if($logs[$i]['CALL'] === 'DD6LK') { $logs[$i]['COMMENT']="Bernhard  Ehrenkirchen"; };
-            if($logs[$i]['CALL'] === 'DB0MGN-2m') { $logs[$i]['COMMENT']="Jens(DJ1JAY) Thüringen"; };
-            if($logs[$i]['CALL'] === 'DL7ATO') { $logs[$i]['COMMENT']="Manfred  Berlin"; };
-            if($logs[$i]['CALL'] === 'V51SA') { $logs[$i]['COMMENT']="Angela   Namibia"; };
-            /* END EXTRA HACK END*/
 
             if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
 

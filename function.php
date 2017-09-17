@@ -29,5 +29,4 @@ function getlastlog($logfile, $logcount) {
     }
     return $logline;
 }
-
 ?>
