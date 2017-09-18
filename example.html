@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="de"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<link rel="manifest" href="/favicons/manifest.json">
+<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+<title>SVXLINKREFLECTOR</title><script src="tablesort.js"></script>
+<style type="text/css">table {
+    margin: 0px;
+}
+
+th {
+    font-size: 1em;
+    background: #666;
+    color: #FFF;
+    padding: 0em 1.5em;
+    border-collapse: separate;
+    border: 0px solid #000;
+    text-align:center;
+    vertical-align: middle;
+}
+/* smaal state row*/
+th.state {
+    font-size: 1em;
+    background: #666;
+    color: #FFF;
+    padding: 0em;
+    width: 40px;
+    border-collapse: separate;
+    border: 0px solid #000;
+    text-align:center;
+    vertical-align: middle;
+}
+td.tx {
+    padding: 0em;
+    font-size: 20px;
+    background: #FA5858;
+    background: url(tx.gif) center center no-repeat;
+    border: 1px solid #DDD;
+    text-align:center;
+    vertical-align: middle;
+}
+
+th.logline {
+    border: 2px;
+    padding: 2px;
+}
+
+th.led {
+    padding: 0em;
+    font-size: .8em;
+    background: url(led.png) center right no-repeat;
+    padding: 2px 6px;
+    border-collapse: separate;
+    border: 1px solid #000;
+    text-align:center;
+    vertical-align: middle;
+}
+
+td.double {
+    padding: 0em;
+    font-size: 20px;
+    background: #FA5858;
+    background: url(double.png) center center no-repeat;
+    border: 1px solid #DDD;
+    text-align:center;
+    vertical-align: middle;
+}
+
+td.denied {
+    padding: 0em;
+    font-size: 20px;
+    background: #FA5858;
+    background: url(accden.png) center center no-repeat;
+    border: 1px solid #DDD;
+    text-align:center;
+    vertical-align: middle;
+}
+
+td.ear {
+    padding: 0em;
+    width: 0px;
+    text-align: center;
+    margin-left: 0px;
+    background: url(ear.png) center center no-repeat;
+    background-position: center;
+    transition: all 0.6s ease-in;    
+}
+
+td.logshow {
+    padding: 0em;
+    text-align: left;
+    font-size: .8em;
+    width: 500px;
+    background: linear-gradient(to left, transparent 50%, #1F7DE2 50%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 0.6s ease-in;
+}
+
+.tooltip {
+    font-size: 1em;
+    position: relative;
+    display: inline-block;
+    padding: 0em;
+    text-align: center;
+    margin-left: 0px;
+    transition: all 0.6s ease-in;
+}
+.tooltip .tooltiptext {
+    font-size: 0.8em;
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    /* blending in */
+    opacity: 0;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    /* */
+    top: -5px;
+    left: 110%;
+}
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+td.darkgrey {
+    padding: 0.3em;
+    font-size: 1.2em;
+    text-align: center;
+    vertical-align: middle;
+    background: linear-gradient(to bottom, transparent 10%, #D8D8D8 80%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 100% 100%;
+    background-position: right bottom;
+    transition: all 0.6s ease-in;
+}
+td.grey {
+    padding: 0.3em;
+    font-size: 1em;
+    text-align: center;
+    vertical-align: middle;
+    background: linear-gradient(to bottom, transparent 10%, #F3f3f3 80%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 100% 100%;
+    background-position: right bottom;
+    transition: all 0.6s ease-in;
+}
+td.green {
+    padding: 0.3em;
+    font-size: 1.2em;
+    text-align: center;
+    vertical-align: middle;
+    background: linear-gradient(to bottom, transparent 10%, #58FA58 80%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 100% 100%;
+    background-position: right bottom;
+}
+td.red {
+    padding: 0.3em;
+    font-size: 1.3em;
+    text-align: center;
+    vertical-align: middle;
+    background: linear-gradient(to bottom, transparent 10%, #FA5858 80%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 100% 100%;
+    background-position: right bottom;
+    transition: all 0.6s ease-in;
+}
+td.yellow {
+    padding: 0.3em;
+    font-size: 1.3em;
+    text-align: center;
+    vertical-align: middle;
+    background: linear-gradient(to bottom, transparent 10%, #F4FA58 80%), linear-gradient(#F7f7f7, #EEE);
+    background-size: 100% 100%;
+    background-position: right bottom;
+    transition: all 0.6s ease-in;
+}</style></head>
+<main><table id="logtable" with:80%>
+<tr>
+<th onclick=tabSort("EAR")>Callsign client</th>
+<th>Connected since</th>
+<th class="state">state</th>
+<th>Tx on</th>
+<th onclick=tabSort("TOP")>Tx off</th>
+<tr><td class="green"><div class="tooltip">DO0SE<span class="tooltiptext">Andy 432.875 Simplex</span></div></td><td class="grey">14.09.2017 05:50:04</td><td class="grey"></td><td class="grey">19:58:53</td><td class="grey">19:58:55</td></tr>
+<tr><td class="green"><div class="tooltip">DB0MGN-2m<span class="tooltiptext">Jens (DJ1JAY) Thüringen</span></div></td><td class="grey">15.09.2017 07:53:52</td><td class="grey"></td><td class="grey">08:45:40</td><td class="grey">08:45:47</td></tr>
+<tr><td class="red"><div class="tooltip">DD6LK<span class="tooltiptext">Bernhard Ehrenkirchen</span></div></td><td class="grey">ACCESS DENIED</td><td class='denied'></td><td class="grey">ACCESS DENIED</td><td class="grey">ACCESS DENIED</td></tr>
+<tr><td class="darkgrey"><div class="tooltip">DL7ATO<span class="tooltiptext">Manfred  Berlin</span></div></td><td class="grey">15.09.2017 14:46:50</td><td class="grey"></td><td class="grey">OFFLINE</td><td class="grey">OFFLINE</td></tr>
+<tr><td class="green"><div class="tooltip">DL7ATA<span class="tooltiptext">Frank aus Berlin</span></div></td><td class="grey">15.09.2017 03:40:19</td><td class='tx'></td><td class="yellow">19:58:56</td><td class="yellow">19:58:56</td></tr>
+<tr><td class="green"><div class="tooltip">V51SA<span class="tooltiptext">Angela Namibia</span></div></td><td class="grey">15.09.2017 17:00:00</td><td class="grey"></td><td class="grey">ONLINE</td><td class="grey">ONLINE</td></tr>
+<tr><tr><th class='logline' colspan='6'></th></tr>
+<tr><th colspan='6'>SxvlinkReflector-Dashboard-Refresh 2017-09-18 | 19:02:28</3007></30Mon, 18 Sep 2017 19:02:28 +0200>
+<tr><th colspan='6'>Logfile</th></tr>
+
+        <td class='logshow'; colspan='6'><pre>15.09.2017 19:58:56: ### DL7ATA: Talker start
+15.09.2017 19:58:55: ### DO0SE: Talker stop
+15.09.2017 19:58:53: ### DO0SE: Talker start
+15.09.2017 19:58:52: ### DL7ATA: Talker stop
+15.09.2017 19:58:51: ### DL7ATA: Talker start
+15.09.2017 19:58:49: DD6LK: Access denied
+15.09.2017 19:58:47: ### DD6LK: Talker start
+15.09.2017 19:58:45: ### DO0SE: Talker stop
+15.09.2017 19:58:40: ### DO0SE: Talker start
+15.09.2017 19:58:38: ### DD6LK: Dropping out of sequence frame with seq=10211. Expected seq=10213
+15.09.2017 19:58:38: ### DD6LK: Talker stop
+15.09.2017 19:58:38: ### DD6LK: UDP frame(s) lost. Expected seq=10211. Received seq=10212
+15.09.2017 19:58:34: ### DD6LK: Talker start
+15.09.2017 19:58:33: ### V51SA: UDP frame(s) lost. Expected seq=778. Received seq=779
+15.09.2017 19:58:31: ### DL7ATA: Talker stop
+15.09.2017 19:58:27: ### DL7ATA: Talker start
+15.09.2017 19:58:25: ### DO0SE: Talker stop
+15.09.2017 19:58:15: ### DO0SE: Talker start
+15.09.2017 19:58:12: ### DL7ATA: Talker stop
+</pre></td></tr></table>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own v20170918.1807</a>

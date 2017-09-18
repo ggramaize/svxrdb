@@ -45,7 +45,7 @@ function getdata($logfilename) {
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 //member found
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-                $clients[$key]['IP']=substr($data[6], 0, 10);
+                $clients[$key]['IP']=$data[6];
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_S']="ONLINE";
                 $clients[$key]['TX_E']="ONLINE";
@@ -54,7 +54,7 @@ function getdata($logfilename) {
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
-                'IP'=> substr($data[6], 0, 10), 'STATUS'=> 'ONLINE',
+                'IP'=> $data[6], 'STATUS'=> 'ONLINE',
                 'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE", 'COMMENT'=>"new client ".$data[0]." ".substr($data[1], 0, -1));
             }
         } // END Login OK from
@@ -81,7 +81,7 @@ function getdata($logfilename) {
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 //member found
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1); //: remoed from timestring
-                $clients[$key]['IP']=substr($data[4], 0, 10);
+                $clients[$key]['IP']=$data[4];
                 $clients[$key]['STATUS']="OFFLINE";
                 $clients[$key]['TX_S']="OFFLINE";
                 $clients[$key]['TX_E']="OFFLINE";
@@ -92,7 +92,7 @@ function getdata($logfilename) {
                 if ($data[2] !== "Client")
                 {
                     $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
-                    'IP'=> substr($data[4], 0, 10), 'STATUS'=> "OFFLINE",
+                    'IP'=> $data[4], 'STATUS'=> "OFFLINE",
                     'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE", 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
                 }
             }

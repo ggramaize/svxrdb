@@ -50,9 +50,9 @@ echo "<style type=\"text/css\">".$current_style."</style></head>\n\r";
 if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
     echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
-    echo "<th>Connection</th>\n\r";
+    echo "<th>Connected since</th>\n\r";
     
-    if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
+    if( (IPLIST == "SHOW") OR (IPLIST == "SHOWLONG")) {
         echo "<th>Network address</th>\n\r";
     }
     
@@ -79,9 +79,13 @@ if (count($logs) >= 0){
                 
                 echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
                 
-                if( preg_match('/'.IPLIST.'/i', 'SHOW')) {
-                    echo '<td class="grey">'.$logs[$i]['IP'].'</td>';
+                if( IPLIST == "SHOW") {
+                    echo '<td class="grey">'.explode(":",$logs[$i]['IP'])[0].'</td>';
                 }
+                if( IPLIST == "SHOWSHORT") {
+                    echo '<td class="grey">'.substr($logs[$i]['IP'], 0, 10).'</td>';
+                }
+
                 if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'tx\'></td>';
                 }
@@ -139,5 +143,5 @@ if (count($logs) >= 0){
     }
     echo "</table>\n\r";
 }
-echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br /><a rel="github" href="https://github.com/SkyAndy/svxrdb/">DO7EN / DJ1JAY</a> v'.DBVERSION;
+echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own v'.DBVERSION.'</a>';
 ?>

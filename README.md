@@ -18,7 +18,7 @@ FUNKTIONEN:
   - Client Sprechzeiten
     - Anfang / Endzeit
   - Spalte IP-Adresse des Clients
-    - zu / abschaltbar (IPLIST)
+    - zu / abschaltbar (IPLIST) SHOWSHORT or SHOW
     - auf 10 Zeichen gekürzt
   - Statusleiste mit einem Zeitstempel
     - ein/ausblenden (REFRESHSTATUS)
@@ -28,6 +28,7 @@ FUNKTIONEN:
     - wenn logrotate eine neue Datei anlegt werden die alten Client-Daten mit angezeigt
   - Darstellunglayout der Seite via css
     - (STYLECSS)
+  - Beispielseite http://datenport.net/svxrdb/example.html
 
 ## HINWEIS:
   - Der Zeitstempel in der svxreflector.conf MUSS so eingestellt sein.
