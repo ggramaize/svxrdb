@@ -55,7 +55,7 @@ FUNCTIONS:
     - Online / Offline / Icon->"speaking" / Icon->"busy"
   - Client tx-on and tx-off timestamp
   - Column IP of Clients
-    - turn on/off (IPLIST)
+    - turn on/off (IPLIST) SHOWSHORT or SHOW
     - up to 10 characters
   - Status with timestamp
     - turn on/off (REFRESHSTATUS)
@@ -65,6 +65,7 @@ FUNCTIONS:
     - After logrotate there is a new file with historic client-dats
   - Layout of page with css
     - (STYLECSS)
+  - example static website http://datenport.net/svxrdb/example.html
 
 ## REMARK:
   - To use the dashboard you MUST define the timestamp in  svxreflector.conf as:
