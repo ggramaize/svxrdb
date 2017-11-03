@@ -242,7 +242,6 @@ function getdata($logfilename) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
-            print_r ($value['SID']);
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
     }
