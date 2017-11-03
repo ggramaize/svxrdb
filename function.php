@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+date_default_timezone_set('Europe/Berlin');
 
 # dateDifference
 /*
@@ -29,4 +30,15 @@ function getlastlog($logfile, $logcount) {
     }
     return $logline;
 }
+
+# 01.09.2017-18:02:47 FORMAT
+function logtounixtime($timestring) {
+    $to=$timestring;
+    list($part1,$part2) = explode('-', $to);
+    list($day, $month, $year) = explode('.', $part1);
+    list($hours, $minutes,$seconds) = explode(':', $part2);
+    $timeto =  mktime($hours, $minutes, $seconds, $month, $day, $year);
+    return $timeto;
+}
+
 ?>

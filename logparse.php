@@ -50,12 +50,14 @@ function getdata($logfilename) {
                 $clients[$key]['TX_S']="ONLINE";
                 $clients[$key]['TX_E']="ONLINE";
                 $clients[$key]['COMMENT']="new client ".$data[0]." ".substr($data[1], 0, -1);
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                 'IP'=> $data[6], 'STATUS'=> 'ONLINE',
-                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE", 'COMMENT'=>"new client ".$data[0]." ".substr($data[1], 0, -1));
+                'TX_S'=> "ONLINE", 'TX_E'=> "ONLINE", 'COMMENT'=>"new client ".$data[0]." ".substr($data[1], 0, -1),
+                'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
             }
         } // END Login OK from
 
@@ -85,7 +87,8 @@ function getdata($logfilename) {
                 $clients[$key]['STATUS']="OFFLINE";
                 $clients[$key]['TX_S']="OFFLINE";
                 $clients[$key]['TX_E']="OFFLINE";
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1); //: remove from timestring
             } else {
                 // member not found add im
                 // ### ReflectorClient::disconnect: Access denied Call "Client" not allowed in list :)
@@ -93,7 +96,7 @@ function getdata($logfilename) {
                 {
                     $clients[] = array( 'CALL'=> $data[2], 'LOGINOUTTIME'=> $data[0]." ".substr($data[1], 0, -1),
                     'IP'=> $data[4], 'STATUS'=> "OFFLINE",
-                    'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE", 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
+                    'TX_S'=> "OFFLINE", 'TX_E'=> "OFFLINE", 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
                 }
             }
         }// END disconnected: Connection closed
@@ -117,12 +120,13 @@ function getdata($logfilename) {
                 $clients[$key]['STATUS']="TX";
                 $clients[$key]['TX_S']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "TX",
-                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1));
+                'TX_S'=> substr($data[1], 0, -1), 'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
                 $lastheard_call = $data[2];
             }
         }// END Talker start
@@ -145,12 +149,13 @@ function getdata($logfilename) {
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "ONLINE",
-                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
                 $lastheard_call = $data[2];
             }
         }// END Talker stop
@@ -174,12 +179,13 @@ function getdata($logfilename) {
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DOUBLE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remoed from timestring
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
 
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DOUBLE",
-                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
             }
         }// END Talker double stop
 
@@ -203,11 +209,12 @@ function getdata($logfilename) {
                 $clients[$key]['IP']="ACCESS DENIED";
                 $clients[$key]['TX_S']="ACCESS DENIED";
                 $clients[$key]['TX_E']="ACCESS DENIED";
-                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DENIED",
-                'TX_E'=> substr($data[1], 0, -1), 'SID'=> $data[0]." ".substr($data[1], 0, -1) );
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
             }
         }// END Server login failure
 
@@ -225,7 +232,7 @@ function getdata($logfilename) {
         $serialized_data = serialize($clients);
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
-
+    
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
         $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
         $value = $clients[$last_key];
@@ -235,9 +242,9 @@ function getdata($logfilename) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
+            print_r ($value['SID']);
         } 
         array_multisort($clients_sort, SORT_DESC, $clients);
-
     }
 
     return $clients;

@@ -117,7 +117,6 @@ if (count($logs) >= 0){
                     echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';                
                 }
                 echo "</tr>\n\r";
-            
             } // END NEWLOGFILEDATA FALSE
             // add marker for new logfiledata
             if (preg_match('/NEWLOGFILEDATA/i', $logs[$i]['CALL'])) {
