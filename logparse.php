@@ -189,7 +189,41 @@ function getdata($logfilename) {
             }
         }// END Talker double stop
 
-        // Server login failure
+        // Server Auth failure
+        if(preg_match("/Authentication failed for user/i",  $value)) {
+            $data = explode(" ",$value);
+            $data[1] = str_replace(":","",$data[1]);
+            $data[8] = str_replace("\"", "", $data[8]);
+            /*
+            Array
+    (
+        [0] => 02.11.2017
+        [1] => 12:47:04:
+        [2] => Client
+        [3] => 188.193.218.143:34184
+        [4] => Authentication
+        [5] => failed
+        [6] => for
+        [7] => user
+        [8] => "DB0SVX"
+    )            
+            */  
+            if (($key = array_search($data[8], array_column($clients, 'CALL'))) !==FALSE) {
+                $clients[$key]['STATUS']="DENIED";
+                $clients[$key]['LOGINOUTTIME']="ACCESS DENIED"; //: remoed from timestring
+                $clients[$key]['IP']="ACCESS DENIED";
+                $clients[$key]['TX_S']="ACCESS DENIED";
+                $clients[$key]['TX_E']="ACCESS DENIED";
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
+            } else {
+                //member not found add im
+                $clients[] = array( 'CALL'=> $data[8], 'STATUS'=> "DENIED",
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
+            }
+        }// END Server login failure
+
+      // Server login failure
         if((preg_match("/[Access denied]{6}/",  $value)) AND (strlen($value)<=57 )) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
@@ -216,7 +250,7 @@ function getdata($logfilename) {
                 $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "DENIED",
                 'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
             }
-        }// END Server login failure
+        }// END Server Auth failure
 
     } // END foreach ($logline as $value)
 
