@@ -158,6 +158,33 @@ function getdata($logfilename) {
             }
         }// END Talker stop
 
+        if(preg_match("/Talker audio timeout/i", $value)) {
+            $data = explode(" ",$value);
+            $data[2] = str_replace(":","",$data[2]);
+            /*
+            Array
+    (
+        [0] => 01.09.2017
+        [1] => 18:13:17:
+        [2] => V51SA:
+        [3] => Talker
+        [4] => audio
+        [5] => timeout
+    )
+            */
+            if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
+                $clients[$key]['STATUS']="ONLINE";
+                $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
+                $lastheard_call = $data[2];
+            } else {
+                //member not found add im
+                $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "ONLINE",
+                'TX_E'=> substr($data[1], 0, -1), 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
+                $lastheard_call = $data[2];
+            }
+        }// END Audio timeout
+
         if(preg_match("/is already talking.../i", $value)) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
