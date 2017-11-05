@@ -76,6 +76,9 @@ if (count($logs) >= 0){
                 if ( ($logs[$i]['STATUS'] === "DOUBLE") OR ($logs[$i]['STATUS'] === "DENIED") ){
                     echo '<td class="red"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
                 }
+                if ($logs[$i]['STATUS'] === "ALREADY") {
+                    echo '<td class="yellow"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                }                
                 
                 echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
                 
@@ -109,6 +112,10 @@ if (count($logs) >= 0){
                     echo '<td class=\'denied\'></td>';
                 }
       
+                if (preg_match('/ALREADY/i',$logs[$i]['STATUS'])) {
+                    echo '<td class=\'grey\'></td>';
+                }
+
                 if(preg_match('/TX/i',$logs[$i]['STATUS'])) {
                     echo '<td class="yellow">'.$logs[$i]['TX_S'].'</td>';
                     echo '<td class="yellow">'.$logs[$i]['TX_E'].'</td>';

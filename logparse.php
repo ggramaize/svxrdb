@@ -61,6 +61,7 @@ function getdata($logfilename) {
             }
         } // END Login OK from
 
+
         if((preg_match("/disconnected: Connection closed/i", $value)) OR (preg_match("/disconnected: Locally ordered/i", $value))) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
@@ -101,7 +102,35 @@ function getdata($logfilename) {
             }
         }// END disconnected: Connection closed
 
-        if(preg_match("/Talker start/i", $value)) {
+      if(preg_match("/Already connected/i", $value)) {
+            $data = explode(" ",$value);
+            $data[2] = str_replace(":","",$data[2]);
+            /*
+            Array
+    (
+        [0] => 01.09.2017
+        [1] => 18:13:13:
+        [2] => DO0SE:
+        [3] => Already
+        [4] => connected
+    )
+            */
+            if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
+                $clients[$key]['STATUS']="ALREADY";
+                $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1);
+                $clients[$key]['TX_S']="already";
+                $clients[$key]['TX_E']="connected";
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $lastheard_call = $data[2];
+            } else {
+                //member not found add im
+                $clients[] = array( 'CALL'=> $data[2], 'STATUS'=> "ALREADY", 'LOGINOUTTIME'=> "$data[0] ".substr($data[1], 0, -1),
+                'TX_S'=> "already", 'TX_E'=> "connected", 'SID'=> logtounixtime("$data[0]-".substr($data[1], 0, -1)) );
+                $lastheard_call = $data[2];
+            }
+        }// END Already connected
+
+       if(preg_match("/Talker start/i", $value)) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
             /*
@@ -120,7 +149,6 @@ function getdata($logfilename) {
                 $clients[$key]['TX_S']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
-//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
@@ -148,7 +176,6 @@ function getdata($logfilename) {
                 $clients[$key]['STATUS']="ONLINE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
-//                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
