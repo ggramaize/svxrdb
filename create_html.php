@@ -126,7 +126,7 @@ if (count($logs) >= 0){
     }
 
     if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
-        echo "<tr><th colspan='6'>SxvlinkReflector-Dashboard-Refresh ".date("Y-m-d | H:i:s"."</th></tr>\n\r");
+        echo "<tr><th colspan='6'>SvxReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
     }
 
     if( preg_match('/'.LOGFILETABLE.'/i', 'SHOW')) {

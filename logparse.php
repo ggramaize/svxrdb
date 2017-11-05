@@ -109,11 +109,10 @@ function getdata($logfilename) {
     (
         [0] => 01.09.2017
         [1] => 18:13:13:
-        [2] => ###
-        [3] => DO0SE:
-        [4] => Talker
-        [5] => start
-        [6] => 
+        [2] => DO0SE:
+        [3] => Talker
+        [4] => start
+        [5] => 
     )
             */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
@@ -139,11 +138,10 @@ function getdata($logfilename) {
     (
         [0] => 01.09.2017
         [1] => 18:13:17:
-        [2] => ###
-        [3] => DO0SE:
-        [4] => Talker
-        [5] => stop
-        [6] => 
+        [2] => DO0SE:
+        [3] => Talker
+        [4] => stop
+        [5] => 
     )
             */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
@@ -168,12 +166,11 @@ function getdata($logfilename) {
     (
         [0] => 08.09.2017
         [1] => 18:30:01:
-        [2] => ###
-        [3] => DD6LK:
-        [4] => DL7ATA
-        [5] => is
-        [6] => already
-        [7] => talking...
+        [2] => DD6LK:
+        [3] => DL7ATA
+        [4] => is
+        [5] => already
+        [6] => talking...
     )           
             */  
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
@@ -192,7 +189,6 @@ function getdata($logfilename) {
         // Server Auth failure
         if(preg_match("/Authentication failed for user/i",  $value)) {
             $data = explode(" ",$value);
-            $data[1] = str_replace(":","",$data[1]);
             $data[8] = str_replace("\"", "", $data[8]);
             /*
             Array
