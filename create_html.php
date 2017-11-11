@@ -149,5 +149,14 @@ if (count($logs) >= 0){
     }
     echo "</table>\n\r";
 }
+
+if( LEGEND == "SHOW") {
+    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this relay</td></tr>';
+    echo '<tr><td><center><img src="./accden.png"></center></td><td> wrong access data! contact sysop</td></tr>';
+    echo '<tr><td><center><img src="./double.png"></center></td><td> another station is already talking</td></tr>';
+    echo '<tr><td><center><img src="./ear.png"></center></td><td> last heard station, at last heard sorting</td></tr>';
+    echo '<tr><td><center></center></td><td> switch sorting with click on Callsign client / TX off head</td></tr></table>';
+}
+
 echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
 ?>

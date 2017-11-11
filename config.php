@@ -29,7 +29,9 @@ define("RECOVER", "NO");
 use "TOP" as a keyword to see the last transmission in the first place in the list (EAR is no longer seen automatically) change it on runntime with click on "Callsign client" or "state" table header */
 $LASTHEARD = "EAR"; // EAR or TOP
 
-
+/* set to SHOW legend is showing
+*/
+define("LEGEND", "SHOW");
 
 
 //do not change this values
