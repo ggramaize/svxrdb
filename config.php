@@ -27,16 +27,16 @@ define("RECOVER", "NO");
 
 /* use "EAR" to mark with the icon of the last transmission.
 use "TOP" as a keyword to see the last transmission in the first place in the list (EAR is no longer seen automatically) change it on runntime with click on "Callsign client" or "state" table header */
-$LASTHEARD = "EAR"; // EAR or TOP
+$LASTHEARD = "TOP"; // EAR or TOP
 
-/* set to SHOW legend is showing
-*/
-define("LEGEND", "SHOW");
+/* set to DE Deutsch to EN for English languange
+set NO legend not showing */
+define("LEGEND", "EN");
 
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20171103.2110" );
+define("DBVERSION", "20171111.2121" );
 $lastheard_call = "CALL";
 $clients[] = array();
 // ----
