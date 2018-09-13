@@ -9,7 +9,7 @@ date_default_timezone_set('Europe/Berlin');
 */
 function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' ) {
 	$datetime1 = date_create($date_1);
-	$datetime2 = date_create($date_2);	 
+	$datetime2 = date_create($date_2);
 	$interval = date_diff($datetime1, $datetime2);
     $t1 = strtotime($date_1);
     $t2 = strtotime($date_2);
@@ -24,7 +24,7 @@ function getlastlog($logfile, $logcount) {
     $data = array_slice(file($logfile),$logcount);
     $size = count($data);
     $logline = array();
-    for($x=0; $x < $logcount; $x++) 
+    for($x=0; $x < $logcount; $x++)
     {
         array_push($logline,$data[$size-$x]);
     }

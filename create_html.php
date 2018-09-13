@@ -6,7 +6,7 @@ require_once('logparse.php');
 require_once('array_column.php');
 require_once('userdb.php');
 
-if(isset($_COOKIE["svxrdb"])) { 
+if(isset($_COOKIE["svxrdb"])) {
     $LASTHEARD = $_COOKIE["svxrdb"];
 }
 
@@ -51,19 +51,19 @@ if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
     echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
     echo "<th>Connected since</th>\n\r";
-    
+
     if( (IPLIST == "SHOW") OR (IPLIST == "SHOWLONG")) {
         echo "<th>Network address</th>\n\r";
     }
-    
+
     echo '<th class="state">state</th>'."\n\r";
-    echo "<th>Tx on</th>\n\r";
-    echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r";
-    
+    echo "<th>TX on</th>\n\r";
+    echo "<th onclick=tabSort(\"TOP\")>TX off</th>\n\r";
+
     for ($i=0; $i<count($logs, 0); $i++)
     {
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
-            echo '<tr>'; 
+            echo '<tr>';
 
             if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
 
@@ -78,10 +78,10 @@ if (count($logs) >= 0){
                 }
                 if ($logs[$i]['STATUS'] === "ALREADY") {
                     echo '<td class="yellow"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
-                }                
-                
+                }
+
                 echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
-                
+
                 if( IPLIST == "SHOW") {
                     echo '<td class="grey">'.explode(":",$logs[$i]['IP'])[0].'</td>';
                 }
@@ -99,7 +99,7 @@ if (count($logs) >= 0){
                 if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
                     if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
                         echo '<td class="ear"></td>';
-                    } else { 
+                    } else {
                         echo '<td class="grey"></td>';
                     }
                 }
@@ -111,7 +111,7 @@ if (count($logs) >= 0){
                 if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'denied\'></td>';
                 }
-      
+
                 if (preg_match('/ALREADY/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'grey\'></td>';
                 }
@@ -121,7 +121,7 @@ if (count($logs) >= 0){
                     echo '<td class="yellow">'.$logs[$i]['TX_E'].'</td>';
                 } else {
                     echo '<td class="grey">'.$logs[$i]['TX_S'].'</td>';
-                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';                
+                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';
                 }
                 echo "</tr>\n\r";
             } // END NEWLOGFILEDATA FALSE
@@ -133,7 +133,7 @@ if (count($logs) >= 0){
     }
 
     if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
-        echo "<tr><th colspan='6'>SvxReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
+        echo "<tr><th colspan='6'>SVXReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
     }
 
     if( preg_match('/'.LOGFILETABLE.'/i', 'SHOW')) {
@@ -151,20 +151,20 @@ if (count($logs) >= 0){
 }
 
 if( LEGEND == "EN") {
-    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this relay</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td> wrong access data! contact sysop</td></tr>';
-    echo '<tr><td><center><img src="./double.png"></center></td><td> another station is already talking</td></tr>';
-    echo '<tr><td><center><img src="./ear.png"></center></td><td> last heard station, at last heard sorting</td></tr>';
-    echo '<tr><td><center></center></td><td> switch sorting with click on Callsign client / TX off head</td></tr></table>';
+    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this repeater</td></tr>';
+    echo '<tr><td><center><img src="./accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>';
+    echo '<tr><td><center><img src="./double.png"></center></td><td>Another station is already talking</td></tr>';
+    echo '<tr><td><center><img src="./ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>';
+    echo '<tr><td><center></center></td><td>Switch sorting with click on Callsign client / TX off head</td></tr></table>';
 }
 
 if( LEGEND == "DE") {
     echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? bitte Sysop kontaktieren</td></tr>';
+    echo '<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>';
     echo '<tr><td><center><img src="./double.png"></center></td><td>Eine andere Station spricht schon</td></tr>';
     echo '<tr><td><center><img src="./ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>';
-    echo '<tr><td><center></center></td><td>Sortierung Umschalten mit klick auf Callsign client / TX off Tabellenkopf</td></tr></table>';
+    echo '<tr><td><center></center></td><td>Sortierung Umschalten mit Klick auf Callsign client / TX off Tabellenkopf</td></tr></table>';
 }
 
-echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
+echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>&nbsp;<a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
 ?>

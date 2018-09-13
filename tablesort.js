@@ -7,7 +7,7 @@ function createCookie(name, value, day) {
 	var expires;
  	if (day) {
   		var date = new Date();
-  		// livetime 1 day 
+  		// livetime 1 day
   		date.setTime(date.getTime() + (day * 86400 * 1000));
   		expires = "; expires=" + date.toGMTString();
  	} else {
