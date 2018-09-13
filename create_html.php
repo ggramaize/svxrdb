@@ -57,8 +57,8 @@ if (count($logs) >= 0){
     }
 
     echo '<th class="state">state</th>'."\n\r";
-    echo "<th>Tx on</th>\n\r";
-    echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r";
+    echo "<th>TX on</th>\n\r";
+    echo "<th onclick=tabSort(\"TOP\")>TX off</th>\n\r";
 
     for ($i=0; $i<count($logs, 0); $i++)
     {
@@ -133,7 +133,7 @@ if (count($logs) >= 0){
     }
 
     if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
-        echo "<tr><th colspan='6'>SvxReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
+        echo "<tr><th colspan='6'>SVXReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
     }
 
     if( preg_match('/'.LOGFILETABLE.'/i', 'SHOW')) {
@@ -151,20 +151,20 @@ if (count($logs) >= 0){
 }
 
 if( LEGEND == "EN") {
-    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this relay</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td> wrong access data! contact sysop</td></tr>';
-    echo '<tr><td><center><img src="./double.png"></center></td><td> another station is already talking</td></tr>';
-    echo '<tr><td><center><img src="./ear.png"></center></td><td> last heard station, at last heard sorting</td></tr>';
-    echo '<tr><td><center></center></td><td> switch sorting with click on Callsign client / TX off head</td></tr></table>';
+    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this repeater</td></tr>';
+    echo '<tr><td><center><img src="./accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>';
+    echo '<tr><td><center><img src="./double.png"></center></td><td>Another station is already talking</td></tr>';
+    echo '<tr><td><center><img src="./ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>';
+    echo '<tr><td><center></center></td><td>Switch sorting with click on Callsign client / TX off head</td></tr></table>';
 }
 
 if( LEGEND == "DE") {
     echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? bitte Sysop kontaktieren</td></tr>';
+    echo '<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>';
     echo '<tr><td><center><img src="./double.png"></center></td><td>Eine andere Station spricht schon</td></tr>';
     echo '<tr><td><center><img src="./ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>';
-    echo '<tr><td><center></center></td><td>Sortierung Umschalten mit klick auf Callsign client / TX off Tabellenkopf</td></tr></table>';
+    echo '<tr><td><center></center></td><td>Sortierung Umschalten mit Klick auf Callsign client / TX off Tabellenkopf</td></tr></table>';
 }
 
-echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
+echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>&nbsp;<a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
 ?>
