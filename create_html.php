@@ -6,7 +6,7 @@ require_once('logparse.php');
 require_once('array_column.php');
 require_once('userdb.php');
 
-if(isset($_COOKIE["svxrdb"])) { 
+if(isset($_COOKIE["svxrdb"])) {
     $LASTHEARD = $_COOKIE["svxrdb"];
 }
 
@@ -51,19 +51,19 @@ if (count($logs) >= 0){
     echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
     echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
     echo "<th>Connected since</th>\n\r";
-    
+
     if( (IPLIST == "SHOW") OR (IPLIST == "SHOWLONG")) {
         echo "<th>Network address</th>\n\r";
     }
-    
+
     echo '<th class="state">state</th>'."\n\r";
     echo "<th>Tx on</th>\n\r";
     echo "<th onclick=tabSort(\"TOP\")>Tx off</th>\n\r";
-    
+
     for ($i=0; $i<count($logs, 0); $i++)
     {
         if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
-            echo '<tr>'; 
+            echo '<tr>';
 
             if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
 
@@ -78,10 +78,10 @@ if (count($logs) >= 0){
                 }
                 if ($logs[$i]['STATUS'] === "ALREADY") {
                     echo '<td class="yellow"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
-                }                
-                
+                }
+
                 echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
-                
+
                 if( IPLIST == "SHOW") {
                     echo '<td class="grey">'.explode(":",$logs[$i]['IP'])[0].'</td>';
                 }
@@ -99,7 +99,7 @@ if (count($logs) >= 0){
                 if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
                     if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
                         echo '<td class="ear"></td>';
-                    } else { 
+                    } else {
                         echo '<td class="grey"></td>';
                     }
                 }
@@ -111,7 +111,7 @@ if (count($logs) >= 0){
                 if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'denied\'></td>';
                 }
-      
+
                 if (preg_match('/ALREADY/i',$logs[$i]['STATUS'])) {
                     echo '<td class=\'grey\'></td>';
                 }
@@ -121,7 +121,7 @@ if (count($logs) >= 0){
                     echo '<td class="yellow">'.$logs[$i]['TX_E'].'</td>';
                 } else {
                     echo '<td class="grey">'.$logs[$i]['TX_S'].'</td>';
-                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';                
+                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';
                 }
                 echo "</tr>\n\r";
             } // END NEWLOGFILEDATA FALSE
