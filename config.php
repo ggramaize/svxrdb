@@ -9,7 +9,7 @@ define("LOGFILETABLE", "SHOW" );
 define("LOGLINECOUNT", "20");
 
 // full path to logfile with read access for http deamon, 'file1', 'file2', 'file3', 'file4' ....
-$LOGFILES = array( 'svxlinkreflector.log', '', '' ); 
+$LOGFILES = array( '../svxlinkreflector.log', '', '' ); 
 
 // set to SHOWSHORT and the IP (only 10 letters) address is showing in HTML
 // set SHOW and the IP address is showing in HTML
@@ -36,7 +36,7 @@ define("LEGEND", "EN");
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20171111.2121" );
+define("DBVERSION", "20182212.1741" );
 $lastheard_call = "CALL";
 $clients[] = array();
 // ----
