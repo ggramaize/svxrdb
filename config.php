@@ -9,11 +9,7 @@ define("LOGFILETABLE", "SHOW" );
 define("LOGLINECOUNT", "20");
 
 // full path to logfile with read access for http deamon, 'file1', 'file2', 'file3', 'file4' ....
-<<<<<<< HEAD
 $LOGFILES = array( '../svxlinkreflector.log', '', '' ); 
-=======
-$LOGFILES = array( 'svxlinkreflector.log', '', '' );
->>>>>>> 4ea76f1107cd1c8d394f15b2b7b16f62cfce4e4a
 
 // set to SHOWSHORT and the IP (only 10 letters) address is showing in HTML
 // set SHOW and the IP address is showing in HTML
