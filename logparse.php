@@ -4,11 +4,11 @@ error_reporting(0);
 
 function getdata($logfilename) {
     global $lastheard_call, $LASTHEARD;
-    
-    if(isset($_COOKIE["svxrdb"])) { 
+
+    if(isset($_COOKIE["svxrdb"])) {
         $LASTHEARD = $_COOKIE["svxrdb"];
     }
-    
+
     $line_of_text = file_get_contents( $logfilename );
     $logline = explode("\n", $line_of_text);
     $member = array( CLIENTLIST );
@@ -120,7 +120,7 @@ function getdata($logfilename) {
                 $clients[$key]['LOGINOUTTIME']="$data[0] ".substr($data[1], 0, -1);
                 $clients[$key]['TX_S']="already";
                 $clients[$key]['TX_E']="connected";
-                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
@@ -141,14 +141,14 @@ function getdata($logfilename) {
         [2] => DO0SE:
         [3] => Talker
         [4] => start
-        [5] => 
+        [5] =>
     )
             */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="TX";
                 $clients[$key]['TX_S']=substr($data[1], 0, -1); //: remove from timestring
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remove from timestring
-                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
                 $lastheard_call = $data[2];
             } else {
                 //member not found add im
@@ -157,7 +157,7 @@ function getdata($logfilename) {
                 $lastheard_call = $data[2];
             }
         }// END Talker start
-        
+
         if(preg_match("/Talker stop/i", $value)) {
             $data = explode(" ",$value);
             $data[2] = str_replace(":","",$data[2]);
@@ -169,7 +169,7 @@ function getdata($logfilename) {
         [2] => DO0SE:
         [3] => Talker
         [4] => stop
-        [5] => 
+        [5] =>
     )
             */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
@@ -225,12 +225,12 @@ function getdata($logfilename) {
         [4] => is
         [5] => already
         [6] => talking...
-    )           
-            */  
+    )
+            */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DOUBLE";
                 $clients[$key]['TX_E']=substr($data[1], 0, -1); //: remoed from timestring
-                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
 //                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
 
             } else {
@@ -256,15 +256,15 @@ function getdata($logfilename) {
         [6] => for
         [7] => user
         [8] => "DB0SVX"
-    )            
-            */  
+    )
+            */
             if (($key = array_search($data[8], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DENIED";
                 $clients[$key]['LOGINOUTTIME']="ACCESS DENIED"; //: remoed from timestring
                 $clients[$key]['IP']="ACCESS DENIED";
                 $clients[$key]['TX_S']="ACCESS DENIED";
                 $clients[$key]['TX_E']="ACCESS DENIED";
-                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
 //                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
@@ -286,14 +286,14 @@ function getdata($logfilename) {
         [3] => Access
         [4] => denied
     )
-            */  
+            */
             if (($key = array_search($data[2], array_column($clients, 'CALL'))) !==FALSE) {
                 $clients[$key]['STATUS']="DENIED";
                 $clients[$key]['LOGINOUTTIME']="ACCESS DENIED"; //: remoed from timestring
                 $clients[$key]['IP']="ACCESS DENIED";
                 $clients[$key]['TX_S']="ACCESS DENIED";
                 $clients[$key]['TX_E']="ACCESS DENIED";
-                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));                
+                $clients[$key]['SID']=logtounixtime("$data[0]-".substr($data[1], 0, -1));
 //                $clients[$key]['SID']="$data[0] ".substr($data[1], 0, -1);
             } else {
                 //member not found add im
@@ -316,7 +316,7 @@ function getdata($logfilename) {
         $serialized_data = serialize($clients);
         file_put_contents("recover_data_".$logfilename, $serialized_data);
     }
-    
+
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
         $last_key = array_search($lastheard_call, array_column($clients, 'CALL'));
         $value = $clients[$last_key];
@@ -326,11 +326,11 @@ function getdata($logfilename) {
         $clients_sort = array();
         foreach ($clients as $key => $value) {
             $clients_sort[$key] = $value['SID'];
-        } 
+        }
         array_multisort($clients_sort, SORT_DESC, $clients);
     }
 
     return $clients;
-} // END function getdata() 
+} // END function getdata()
 
 ?>
