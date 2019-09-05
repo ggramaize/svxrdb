@@ -34,7 +34,7 @@ define("LEGEND", "EN");
 define("TIMEZONE", 'Europe/Paris');
 
 /* Refresh delay in seconds. this is interesting if you have APCu enabled */
-define("REFRESH_DLY", 5);
+define("REFRESH_DLY", 2);
 
 
 //do not change this values

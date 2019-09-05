@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("#create_html").load("create_html.php");
     var refreshId = setInterval(function() {
         $("#create_html").load('create_html.php?' + 1*new Date());
-    },<?php echo(REFRESH_DLY*1000); ?>);
+    },<?php echo(((REFRESH_DLY>0)?REFRESH_DLY:1)*1000); ?>);
 });
 </script>
 <div id="create_html"></div>
