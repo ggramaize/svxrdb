@@ -34,6 +34,14 @@ function add_upd_client( &$clients, $call, $loginouttime, $ip, $status, $tx_s, $
 function getdata($logfilename) {
     global $lastheard_call, $LASTHEARD;
 
+    if( ($clients = cache_fetch_if_applicable( 'svxrdb_clients')) !== null )
+    {
+	// Pull data from cache instead of recomputing result
+	$lastheard_call = cache_fetch_if_applicable( 'svxrdb_lasthrd');
+	if( $lastheard_call === null ) $lastheard_call = '';
+        return $clients;
+    }
+
     if(isset($_COOKIE["svxrdb"])) {
         $LASTHEARD = $_COOKIE["svxrdb"];
     }
@@ -159,6 +167,10 @@ function getdata($logfilename) {
         }
         array_multisort($clients_sort, SORT_DESC, $clients);
     }
+
+    cache_store_if_applicable( 'svxrdb_clients', $clients, REFRESH_DLY);
+    cache_store_if_applicable( 'svxrdb_lasthrd', $lastheard_call, REFRESH_DLY+1);
+
     return $clients;
 } // END function getdata()
 

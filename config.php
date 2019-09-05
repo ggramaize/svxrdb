@@ -33,6 +33,10 @@ define("LEGEND", "EN");
 /* set timezone */
 define("TIMEZONE", 'Europe/Paris');
 
+/* Refresh delay in seconds. this is interesting if you have APCu enabled */
+define("REFRESH_DLY", 5);
+
+
 //do not change this values
 define("CLIENTLIST", "CALL");
 define("DBVERSION", "20190905.1500-nmu1" );

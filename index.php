@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<?php require_once('config.php'); ?><!DOCTYPE HTML>
 <html lang="de">
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("#create_html").load("create_html.php");
     var refreshId = setInterval(function() {
         $("#create_html").load('create_html.php?' + 1*new Date());
-    },1000);
+    },<?php echo(REFRESH_DLY*1000); ?>);
 });
 </script>
 <div id="create_html"></div>

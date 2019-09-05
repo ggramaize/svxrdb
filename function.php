@@ -48,4 +48,26 @@ function logtounixtime($timestring) {
     return $timeto;
 }
 
+function cache_fetch_if_applicable( $key)
+{
+    // Give up if APCu isn't available
+    if( !function_exists('apc_cache_info'))
+        return null;
+
+    // Give up if entry not in cache
+    if( !apc_exists( $key) )
+        return null;
+    
+    return apc_fetch( $key);
+}
+
+function cache_store_if_applicable( $key, $value, $ttl)
+{
+    // Give up if APCu isn't available
+    if( !function_exists('apc_cache_info'))
+        return;
+
+    return apc_store( $key, $value, $ttl);
+}
+
 ?>
