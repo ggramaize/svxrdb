@@ -1,6 +1,5 @@
 <?php
-#error_reporting(0);
-date_default_timezone_set('Europe/Berlin');
+date_default_timezone_set( TIMEZONE );
 
 # dateDifference
 /*
@@ -33,7 +32,7 @@ function getlastlog($logfile, $logcount) {
     if ($size==0)
         return $logline;
 
-    for($x=0; $x<$logcount; $x++)
+    for($x=0; $x<($size-$logcount); $x++)
         array_push($logline,$data[$size-$x]);
 
     return $logline;
