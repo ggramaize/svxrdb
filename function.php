@@ -33,7 +33,7 @@ function getlastlog($logfile, $logcount) {
         return $logline;
 
     for($x=0; $x<($size-$logcount); $x++)
-        array_push($logline,$data[$size-$x]);
+        array_push($logline,$data[$size-$x-1]);
 
     return $logline;
 }
