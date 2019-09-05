@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+#error_reporting(0);
 date_default_timezone_set('Europe/Berlin');
 
 # dateDifference
@@ -21,13 +21,21 @@ function dateDifference($date_1 , $date_2 , $differenceFormat = '%a' ) {
 }
 
 function getlastlog($logfile, $logcount) {
+    // Give up if file name is empty, or file doesn't exists
+    if( empty($logfile) || $logfile === null || !file_exists($logfile) )
+        return array();
+
     $data = array_slice(file($logfile),$logcount);
     $size = count($data);
     $logline = array();
-    for($x=0; $x < $logcount; $x++)
-    {
+
+    // Give up if file is empty
+    if ($size==0)
+        return $logline;
+
+    for($x=0; $x<$logcount; $x++)
         array_push($logline,$data[$size-$x]);
-    }
+
     return $logline;
 }
 
