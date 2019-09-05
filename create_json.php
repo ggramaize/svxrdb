@@ -25,9 +25,9 @@ if(count($LOGFILES,0) >0) {
 } else { exit(0); }
 
 /* loading userdb for mouse hover textinfo from userdb.php */
-for ($i=0; $i<count($logs, 0); $i++) {
-    if (isset($userdb_array[$logs[$i]['CALL']], $userdb_array)) {
-       $logs[$i]['COMMENT'] = $userdb_array[$logs[$i]['CALL']];
+foreach ($logs as $key => $log) {
+    if (isset($userdb_array[$log['CALL']], $userdb_array)) {
+       $logs[$key]['COMMENT'] = $userdb_array[$log['CALL']];
     }
 }
 header("Content-type: application/json");

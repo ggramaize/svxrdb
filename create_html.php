@@ -14,7 +14,7 @@ $logs = array();
 if(count($LOGFILES,0) >0) {
     for($i=0; $i<count($LOGFILES,0); $i++) {
         // check if filename size greater as zero
-        if(empty($LOGFILES[$i])) { } else {
+        if( !empty($LOGFILES[$i])) {
             $lastdata=getdata($LOGFILES[$i]);
             if(count($lastdata) >0) {
                 $logs=array_merge($logs, $lastdata);
@@ -25,115 +25,122 @@ if(count($LOGFILES,0) >0) {
 } else { exit(0); }
 
 /* loading userdb for mouse hover textinfo from userdb.php */
-for ($i=0; $i<count($logs, 0); $i++) {
-    if (isset($userdb_array[$logs[$i]['CALL']], $userdb_array)) {
-       $logs[$i]['COMMENT'] = $userdb_array[$logs[$i]['CALL']];
+foreach ( $logs as $key => $log) {
+    if (isset($userdb_array[$log['CALL']], $userdb_array)) {
+       $logs[$key]['COMMENT'] = $userdb_array[$log['CALL']];
     }
 }
 
-echo "<!DOCTYPE html>";
-echo "<html lang=\"de\"><head>\r\n";
-echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>";
-echo '<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+?>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
 <link rel="manifest" href="/favicons/manifest.json">
 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="theme-color" content="#ffffff">';
+<meta name="theme-color" content="#ffffff">
 
-echo "\r\n<title>SVXLINKREFLECTOR</title>";
-echo "<script src=\"tablesort.js\"></script>\n\r";
+<title>SVXLINKREFLECTOR</title>
+<script src="tablesort.js"></script>
 
-$current_style = file_get_contents(STYLECSS);
-echo "<style type=\"text/css\">".$current_style."</style></head>\n\r";
+<style type="text/css"><?php echo(file_get_contents(STYLECSS)); ?></style>
+</head>
+<body>
+<?php 
+
 
 if (count($logs) >= 0){
-    echo "<main><table id=\"logtable\" with:80%>\n\r<tr>\n\r";
-    echo "<th onclick=tabSort(\"EAR\")>Callsign client</th>\n\r";
-    echo "<th>Connected since</th>\n\r";
-
-    if( (IPLIST == "SHOW") OR (IPLIST == "SHOWLONG")) {
-        echo "<th>Network address</th>\n\r";
-    }
-
-    echo '<th class="state">state</th>'."\n\r";
-    echo "<th>TX on</th>\n\r";
-    echo "<th onclick=tabSort(\"TOP\")>TX off</th>\n\r";
-
-    for ($i=0; $i<count($logs, 0); $i++)
+?>
+<main>
+<table id="logtable" with:80%>
+<tr>
+	<th onclick="javascript:tabSort('EAR');">Callsign client</th>
+	<th>Connected since</th>
+	<?php if( (IPLIST == "SHOW") OR (IPLIST == "SHOWLONG")) { ?><th>Network address</th><?php } ?> 
+	<th class="state">state</th>
+	<th>TX on</th>
+	<th onclick="javascript:tabSort('TOP');">TX off</th>
+</tr>
+<?php
+    foreach ( $logs as $log )
     {
-        if( ($logs[$i]['CALL'] != "CALL") AND ($logs[$i]['CALL'] != '') ) {
+        if( ($log['CALL'] != "CALL") && ($log['CALL'] != '') ) {
             echo '<tr>';
 
-            if($logs[$i]['CALL'] != 'NEWLOGFILEDATA') {
+            if($log['CALL'] != 'NEWLOGFILEDATA') {
 
-                if ( ($logs[$i]['STATUS'] === "ONLINE") OR ($logs[$i]['STATUS'] === "TX") ) {
-                    echo '<td class="green"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+		    if ( ($log['STATUS'] === "ONLINE") OR ($log['STATUS'] === "TX") ) {
+                    echo '<td class="green"><div class="tooltip">'.$log['CALL'].'<span class="tooltiptext">'.$log['COMMENT'].'</span></div></td>';
                 }
-                if ($logs[$i]['STATUS'] === "OFFLINE") {
-                    echo '<td class="darkgrey"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                if ($log['STATUS'] === "OFFLINE") {
+                    echo '<td class="darkgrey"><div class="tooltip">'.$log['CALL'].'<span class="tooltiptext">'.$log['COMMENT'].'</span></div></td>';
                 }
-                if ( ($logs[$i]['STATUS'] === "DOUBLE") OR ($logs[$i]['STATUS'] === "DENIED") ){
-                    echo '<td class="red"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                if ( ($log['STATUS'] === "DOUBLE") OR ($log['STATUS'] === "DENIED") ){
+                    echo '<td class="red"><div class="tooltip">'.$log['CALL'].'<span class="tooltiptext">'.$log['COMMENT'].'</span></div></td>';
                 }
-                if ($logs[$i]['STATUS'] === "ALREADY") {
-                    echo '<td class="yellow"><div class="tooltip">'.$logs[$i]['CALL'].'<span class="tooltiptext">'.$logs[$i]['COMMENT'].'</span></div></td>';
+                if ($log['STATUS'] === "ALREADY") {
+                    echo '<td class="yellow"><div class="tooltip">'.$log['CALL'].'<span class="tooltiptext">'.$log['COMMENT'].'</span></div></td>';
                 }
 
-                echo '<td class="grey">'.$logs[$i]['LOGINOUTTIME'].'</td>';
+                echo '<td class="grey">'.$log['LOGINOUTTIME'].'</td>';
 
                 if( IPLIST == "SHOW") {
-                    echo '<td class="grey">'.explode(":",$logs[$i]['IP'])[0].'</td>';
+                    echo '<td class="grey">'.explode(":",$log['IP'])[0].'</td>';
                 }
                 if( IPLIST == "SHOWSHORT") {
-                    echo '<td class="grey">'.substr($logs[$i]['IP'], 0, 10).'</td>';
+                    echo '<td class="grey">'.substr($log['IP'], 0, 10).'</td>';
                 }
 
-                if (preg_match('/TX/i',$logs[$i]['STATUS'])) {
+                if (preg_match('/TX/i',$log['STATUS'])) {
                     echo '<td class=\'tx\'></td>';
                 }
-                if (preg_match('/OFFLINE/i',$logs[$i]['STATUS'])) {
+                if (preg_match('/OFFLINE/i',$log['STATUS'])) {
                     echo '<td class="grey"></td>';
                 }
 
-                if (preg_match('/ONLINE/i',$logs[$i]['STATUS'])) {
-                    if ((preg_match('/'.$logs[$i]['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
+                if (preg_match('/ONLINE/i',$log['STATUS'])) {
+                    if ((preg_match('/'.$log['CALL'].'/i' , $lastheard_call)) AND (preg_match('/'.$LASTHEARD.'/i', 'EAR')) ) {
                         echo '<td class="ear"></td>';
                     } else {
                         echo '<td class="grey"></td>';
                     }
                 }
 
-                if (preg_match('/DOUBLE/i',$logs[$i]['STATUS'])) {
+                if (preg_match('/DOUBLE/i',$log['STATUS'])) {
                     echo '<td class=\'double\'></td>';
                 }
 
-                if (preg_match('/DENIED/i',$logs[$i]['STATUS'])) {
+                if (preg_match('/DENIED/i',$log['STATUS'])) {
                     echo '<td class=\'denied\'></td>';
                 }
 
-                if (preg_match('/ALREADY/i',$logs[$i]['STATUS'])) {
+                if (preg_match('/ALREADY/i',$log['STATUS'])) {
                     echo '<td class=\'grey\'></td>';
                 }
 
-                if(preg_match('/TX/i',$logs[$i]['STATUS'])) {
-                    echo '<td class="yellow">'.$logs[$i]['TX_S'].'</td>';
-                    echo '<td class="yellow">'.$logs[$i]['TX_E'].'</td>';
+                if(preg_match('/TX/i',$log['STATUS'])) {
+                    echo '<td class="yellow">'.$log['TX_S'].'</td>';
+                    echo '<td class="yellow">'.$log['TX_E'].'</td>';
                 } else {
-                    echo '<td class="grey">'.$logs[$i]['TX_S'].'</td>';
-                    echo '<td class="grey">'.$logs[$i]['TX_E'].'</td>';
+                    echo '<td class="grey">'.$log['TX_S'].'</td>';
+                    echo '<td class="grey">'.$log['TX_E'].'</td>';
                 }
                 echo "</tr>\n\r";
             } // END NEWLOGFILEDATA FALSE
             // add marker for new logfiledata
-            if (preg_match('/NEWLOGFILEDATA/i', $logs[$i]['CALL'])) {
+            if (preg_match('/NEWLOGFILEDATA/i', $log['CALL'])) {
                 echo "<tr><th class='logline' colspan='6'></th></tr>\n\r";
             }
         }
     }
 
     if( preg_match('/'.REFRESHSTATUS.'/i', 'SHOW')) {
-        echo "<tr><th colspan='6'>SVXReflector-Dashboard -=[ ".date("Y-m-d | H:i:s"." ]=-</th></tr>\n\r");
+        $date_now = date_timezone_set( date_create('now'), new DateTimeZone(TIMEZONE));
+        ?>
+<tr><th colspan='6'>SVXReflector-Dashboard -=[ <?php echo(date_format( $date_now, 'Y-m-d | H:i:s')); ?> ]=-</th></tr><?php
     }
 
     if( preg_match('/'.LOGFILETABLE.'/i', 'SHOW')) {
@@ -151,20 +158,28 @@ if (count($logs) >= 0){
 }
 
 if( LEGEND == "EN") {
-    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this repeater</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>';
-    echo '<tr><td><center><img src="./double.png"></center></td><td>Another station is already talking</td></tr>';
-    echo '<tr><td><center><img src="./ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>';
-    echo '<tr><td><center></center></td><td>Switch sorting with click on Callsign client / TX off head</td></tr></table>';
+?>
+<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this repeater</td></tr>
+<tr><td><center><img src="./accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>
+<tr><td><center><img src="./double.png"></center></td><td>Another station is already talking</td></tr>
+<tr><td><center><img src="./ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>
+<tr><td><center></center></td><td>Switch sorting with click on Callsign client / TX off head</td></tr></table>
+<?php
 }
 
 if( LEGEND == "DE") {
-    echo '<table><tr><td><center><img src="./tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>';
-    echo '<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>';
-    echo '<tr><td><center><img src="./double.png"></center></td><td>Eine andere Station spricht schon</td></tr>';
-    echo '<tr><td><center><img src="./ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>';
-    echo '<tr><td><center></center></td><td>Sortierung Umschalten mit Klick auf Callsign client / TX off Tabellenkopf</td></tr></table>';
+?>
+<table><tr><td><center><img src="./tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>
+<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>
+<tr><td><center><img src="./double.png"></center></td><td>Eine andere Station spricht schon</td></tr>
+<tr><td><center><img src="./ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>
+<tr><td><center></center></td><td>Sortierung Umschalten mit Klick auf Callsign client / TX off Tabellenkopf</td></tr>
+</table>
+<?php
 }
 
-echo '<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>&nbsp;<a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v'.DBVERSION.'</a>';
 ?>
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="license.png" /></a>&nbsp;
+<a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v<?php echo(DBVERSION); ?></a>
+</body>
+</html>

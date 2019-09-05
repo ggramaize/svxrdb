@@ -1,7 +1,4 @@
 <?php
-
-date_default_timezone_set('Europe/Berlin'); // http://php.net/manual/de/timezones.europe.php
-
 // set to SHOW and the last LOGLINECOUNT lines from logfile is showing in HTML
 define("LOGFILETABLE", "SHOW" );
 
@@ -33,11 +30,14 @@ $LASTHEARD = "TOP"; // EAR or TOP
 set NO legend not showing */
 define("LEGEND", "EN");
 
+/* set timezone */
+define("TIMEZONE", 'Europe/Paris');
 
 //do not change this values
 define("CLIENTLIST", "CALL");
-define("DBVERSION", "20182212.1741" );
+define("DBVERSION", "20190905.1500-nmu1" );
 $lastheard_call = "CALL";
 $clients[] = array();
+date_default_timezone_set( TIMEZONE );
 // ----
 ?>
