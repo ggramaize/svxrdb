@@ -159,27 +159,27 @@ if (count($logs) >= 0){
 
 if( LEGEND == "EN") {
 ?>
-<table><tr><td><center><img src="./tx.gif"></center></td><td>OM talking on this repeater</td></tr>
-<tr><td><center><img src="./accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>
-<tr><td><center><img src="./double.png"></center></td><td>Another station is already talking</td></tr>
-<tr><td><center><img src="./ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>
+<table><tr><td><center><img src="./assets/tx.gif"></center></td><td>OM talking on this repeater</td></tr>
+<tr><td><center><img src="./assets/accden.png"></center></td><td>Wrong credentials! contact sysop</td></tr>
+<tr><td><center><img src="./assets/double.png"></center></td><td>Another station is already talking</td></tr>
+<tr><td><center><img src="./assets/ear.png"></center></td><td>Last heard station, at last heard sorting</td></tr>
 <tr><td><center></center></td><td>Switch sorting with click on Callsign client / TX off head</td></tr></table>
 <?php
 }
 
 if( LEGEND == "DE") {
 ?>
-<table><tr><td><center><img src="./tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>
-<tr><td><center><img src="./accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>
-<tr><td><center><img src="./double.png"></center></td><td>Eine andere Station spricht schon</td></tr>
-<tr><td><center><img src="./ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>
+<table><tr><td><center><img src="./assets/tx.gif"></center></td><td>OM spricht über dieses Relais</td></tr>
+<tr><td><center><img src="./assets/accden.png"></center></td><td>Falsche Zugangsdaten?? Bitte Sysop kontaktieren</td></tr>
+<tr><td><center><img src="./assets/double.png"></center></td><td>Eine andere Station spricht schon</td></tr>
+<tr><td><center><img src="./assets/ear.png"></center></td><td>Zuletzt gehörte Station, bei Last Heard Sortierung </td></tr>
 <tr><td><center></center></td><td>Sortierung Umschalten mit Klick auf Callsign client / TX off Tabellenkopf</td></tr>
 </table>
 <?php
 }
 
 ?>
-<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="license.png" /></a>&nbsp;
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="./assets/license.png" /></a>&nbsp;
 <a style="font-size: 12px; text-decoration: none" rel="github" href="https://github.com/SkyAndy/svxrdb/">get your own Dashboard v<?php echo(DBVERSION); ?></a>
 </body>
 </html>
