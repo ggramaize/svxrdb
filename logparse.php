@@ -34,16 +34,16 @@ function add_upd_client( &$clients, $call, $loginouttime, $ip, $status, $tx_s, $
 function getdata($logfilename) {
     global $lastheard_call, $LASTHEARD;
 
-    if( ($clients = cache_fetch_if_applicable( 'svxrdb_clients')) !== null )
+    if( ($clients = cache_fetch_if_applicable( VHOST_PREFIX.'_clients')) !== null )
     {
 	// Pull data from cache instead of recomputing result
-	$lastheard_call = cache_fetch_if_applicable( 'svxrdb_lasthrd');
+	$lastheard_call = cache_fetch_if_applicable( VHOST_PREFIX.'_lasthrd');
 	if( $lastheard_call === null ) $lastheard_call = '';
 	return $clients;
     }
 
-    if(isset($_COOKIE["svxrdb"])) {
-        $LASTHEARD = $_COOKIE["svxrdb"];
+    if(isset($_COOKIE[ VHOST_PREFIX])) {
+        $LASTHEARD = $_COOKIE[ VHOST_PREFIX];
     }
 
     $logfile = file_get_contents( $logfilename );
@@ -64,7 +64,7 @@ function getdata($logfilename) {
 
     // Recovering old data logrotate issues
     if ( preg_match('/'.RECOVER.'/i', 'YES') ) {
-        $recoveredData = file_get_contents("recover_data_".$logfilename);
+        $recoveredData = file_get_contents("recover_data_".VHOST_PREFIX.'_'.$logfilename);
         $recoveredArray = unserialize($recoveredData);
         $clients=array_merge($clients, $recoveredArray);
     }
@@ -157,7 +157,7 @@ function getdata($logfilename) {
     // Recovering old data logrotate issues
     if ( preg_match('/'.RECOVER.'/i', 'YES') ) {
         $serialized_data = serialize($clients);
-        file_put_contents("recover_data_".$logfilename, $serialized_data);
+        file_put_contents("recover_data_".VHOST_PREFIX.'_'.$logfilename, $serialized_data);
     }
 
     if (preg_match('/'.$LASTHEARD.'/i', 'TOP')) {
@@ -168,8 +168,8 @@ function getdata($logfilename) {
         array_multisort($clients_sort, SORT_DESC, $clients);
     }
 
-    cache_store_if_applicable( 'svxrdb_clients', $clients, (REFRESH_DLY-1>0)?REFRESH_DLY-1:1 );
-    cache_store_if_applicable( 'svxrdb_lasthrd', $lastheard_call, (REFRESH_DLY>1)?REFRESH_DLY+1:2 );
+    cache_store_if_applicable( VHOST_PREFIX.'_clients', $clients, (REFRESH_DLY-1>0)?REFRESH_DLY-1:1 );
+    cache_store_if_applicable( VHOST_PREFIX.'_lasthrd', $lastheard_call, (REFRESH_DLY>1)?REFRESH_DLY+1:2 );
 
     return $clients;
 } // END function getdata()
